@@ -1,4 +1,4 @@
-// types.ts
+
 
 export interface Firm {
     id: number;
@@ -27,5 +27,42 @@ export interface Firm {
     crypto: boolean;
     newsCommission: string;
     [key: string]: string | number | boolean | undefined;
+  }
+
+  export interface Article {
+    id: string;
+    title: string;
+    firmName: string;
+    content: string;
+    author: string;
+    date: string;
+    imageUrl?: string;
+    tags: string[];
+    readTime: number; // en minutos
+  }
+
+  export interface ComparisonData {
+    firm1: {
+      name: string;
+      logo: string;
+      strengths: string[];
+    };
+    firm2: {
+      name: string;
+      logo: string;
+      strengths: string[];
+    };
+    metrics: ComparisonMetric[];
+  }
+  
+  export interface ComparisonMetric {
+    category: string;
+    metrics: {
+      name: string;
+      firm1Value: string | number;
+      firm2Value: string | number;
+      winner: 'firm1' | 'firm2' | 'tie';
+      icon?: React.ReactNode;
+    }[];
   }
   
