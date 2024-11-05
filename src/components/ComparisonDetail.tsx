@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaCheck, FaTimes, FaInfoCircle, FaTrophy } from 'react-icons/fa';
 
@@ -15,6 +15,10 @@ interface ComparisonMetric {
 
 const ComparisonDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
+
+  useEffect(() => {
+    console.log('Slug:', slug);
+  }, [slug]);
 
   // Estos datos vendrían de tu backend o archivo de datos
   const comparisonData = {

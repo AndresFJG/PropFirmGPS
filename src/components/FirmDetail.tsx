@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaStar, FaCheckCircle, FaExternalLinkAlt, FaChartLine } from 'react-icons/fa';
 
@@ -24,44 +24,28 @@ interface FirmDetail {
   websiteUrl: string;
 }
 
-const FirmDetail: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
+interface FirmDetailProps {
+  // tus props aquí
+}
 
-  // Estos datos vendrían de tu backend o archivo de datos
-  const firmData: FirmDetail = {
-    name: 'Topstep',
-    logo: '/images/firms/topstep-logo.png',
-    rating: 4.8,
-    description: 'Topstep es una firma líder en el mercado...',
-    accountSizes: [
-      {
-        size: '$50,000',
-        price: '$165',
-        features: [
-          'Profit Split: 80%',
-          'Reset Fee: None',
-          'Scaling Plan Available'
-        ]
-      },
-      // Más tamaños de cuenta...
-    ],
-    keyFeatures: [
-      {
-        icon: <FaChartLine className="text-[#04a8c2] text-2xl" />,
-        title: 'Trading Conditions',
-        description: 'Spreads competitivos y comisiones bajas'
-      },
-      // Más características...
-    ],
-    tradingConditions: [
-      {
-        label: 'Profit Target',
-        value: '$5,000'
-      },
-      // Más condiciones...
-    ],
-    websiteUrl: 'https://topstep.com'
-  };
+const FirmDetailComponent: React.FC<FirmDetailProps> = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const [firmData, setFirmData] = useState<FirmDetail | null>(null);
+
+  useEffect(() => {
+    const loadFirmData = async () => {
+      if (slug) {
+        try {
+          // Cargar datos de la firma usando el slug
+          // setFirmData(datos)
+        } catch (error) {
+          console.error('Error loading firm data:', error);
+        }
+      }
+    };
+
+    loadFirmData();
+  }, [slug]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -70,13 +54,13 @@ const FirmDetail: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center space-x-6">
             <img 
-              src={firmData.logo}
-              alt={firmData.name}
+              src={firmData?.logo}
+              alt={firmData?.name}
               className="w-24 h-24 object-contain"
             />
             <div>
               <h1 className="text-3xl font-bold text-white mb-2">
-                {firmData.name}
+                {firmData?.name}
               </h1>
               <div className="flex items-center space-x-2">
                 <div className="flex items-center">
@@ -84,7 +68,7 @@ const FirmDetail: React.FC = () => {
                     <FaStar 
                       key={i}
                       className={`${
-                        i < Math.floor(firmData.rating) 
+                        i < Math.floor(firmData?.rating || 0) 
                           ? 'text-yellow-400' 
                           : 'text-gray-400'
                       }`}
@@ -92,14 +76,14 @@ const FirmDetail: React.FC = () => {
                   ))}
                 </div>
                 <span className="text-white font-semibold">
-                  {firmData.rating}
+                  {firmData?.rating}
                 </span>
               </div>
             </div>
           </div>
 
           <a
-            href={firmData.websiteUrl}
+            href={firmData?.websiteUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-4 md:mt-0 flex items-center px-6 py-3 bg-[#04a8c2] text-white rounded-lg hover:bg-[#038ba1] transition-colors duration-200"
@@ -118,7 +102,7 @@ const FirmDetail: React.FC = () => {
             Tamaños de Cuenta Disponibles
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {firmData.accountSizes.map((account, index) => (
+            {firmData?.accountSizes.map((account, index) => (
               <div 
                 key={index}
                 className="bg-purple-800/30 rounded-xl p-6 backdrop-blur-sm"
@@ -148,7 +132,7 @@ const FirmDetail: React.FC = () => {
             Condiciones de Trading
           </h2>
           <div className="bg-purple-800/30 rounded-xl p-6 backdrop-blur-sm">
-            {firmData.tradingConditions.map((condition, index) => (
+            {firmData?.tradingConditions.map((condition, index) => (
               <div 
                 key={index}
                 className="flex justify-between py-3 border-b border-purple-700/30 last:border-0"
@@ -167,7 +151,7 @@ const FirmDetail: React.FC = () => {
           Características Principales
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {firmData.keyFeatures.map((feature, index) => (
+          {firmData?.keyFeatures.map((feature, index) => (
             <div 
               key={index}
               className="bg-purple-800/30 rounded-xl p-6 backdrop-blur-sm"
@@ -189,4 +173,4 @@ const FirmDetail: React.FC = () => {
   );
 };
 
-export default FirmDetail; 
+export default FirmDetailComponent; 
