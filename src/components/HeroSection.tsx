@@ -1,20 +1,144 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import '../index.css';
+
+declare global {
+  interface Window {
+    TradingView?: {
+      widget?: any;
+      widgetConfig?: any;
+      MediumWidget?: any;
+    };
+  }
+}
 
 const HeroSection: React.FC = () => {
+  useEffect(() => {
+    const loadWidget = () => {
+      const container = document.getElementById('tradingview-widget');
+      if (!container) return;
+
+      container.innerHTML = `
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+        </div>
+      `;
+
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.async = true;
+
+      // Crear el objeto de configuración
+      const config = {
+        "symbols": [
+          {
+            "proName": "FOREXCOM:SPXUSD",
+            "title": "S&P 500"
+          },
+          {
+            "proName": "FOREXCOM:NSXUSD",
+            "title": "Nasdaq 100"
+          },
+          {
+            "proName": "FX_IDC:EURUSD",
+            "title": "EUR/USD"
+          },
+          {
+            "proName": "BITSTAMP:BTCUSD",
+            "title": "Bitcoin"
+          },
+          {
+            "proName": "BITSTAMP:ETHUSD",
+            "title": "Ethereum"
+          }
+        ],
+        "showSymbolLogo": true,
+        "colorTheme": "dark",
+        "isTransparent": false,
+        "displayMode": "adaptive",
+        "locale": "es"
+      };
+
+      // Asignar la configuración como un atributo de datos
+      const widgetContainer = container.querySelector('.tradingview-widget-container__widget');
+      if (widgetContainer) {
+        widgetContainer.setAttribute('data-widget-config', JSON.stringify(config));
+      }
+
+      script.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
+      container.appendChild(script);
+    };
+
+    // Cargar el widget con un pequeño retraso
+    const timeoutId = setTimeout(loadWidget, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      const container = document.getElementById('tradingview-widget');
+      if (container) {
+        container.innerHTML = '';
+      }
+    };
+  }, []);
+
   return (
-    <div className="bg-purple-gradient text-white py-12">
-      <div className="container mx-auto px-4 text-center ">
-        <h1 className="text-4xl font-bold mb-4 text-shadow">Encuentra la Mejor Firma de Trading Propietario</h1>
-        <p className="text-xl mb-8">Compara y elige entre cientos de opciones para impulsar tu carrera de trading</p>
-        <Link 
-          to="/comparaciones" 
-          className=" text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-pink-600 transition-all inline-block"
+    <>
+      {/* Hero Content */}
+      <div className="relative min-h-[80vh] flex items-center">
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center z-0"
+          style={{
+            backgroundImage: 'url("/trading-background.jpg")',
+          }}
         >
-          Comparar Firmas Ahora
-        </Link>
+          <div className="absolute inset-0 bg-black bg-opacity-70"></div>
+        </div>
+
+        {/* Content */}
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-3xl mx-auto text-center space-y-8">
+            <h1 className="text-6xl font-bold leading-tight text-white">
+              Trading Profesional
+              <span className="block text-purple-400 mt-2">A Tu Alcance</span>
+            </h1>
+            <p className="text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
+              Descubre y compara las mejores firmas de trading propietario. 
+              Inicia tu camino hacia la libertad financiera con las herramientas correctas.
+            </p>
+            <div className="flex gap-6 justify-center mt-8">
+              <Link 
+                to="/comparaciones" 
+                className="bg-purple-600 hover:bg-purple-700 text-white px-10 py-4 rounded-lg text-lg font-semibold transition-all inline-block"
+              >
+                Comparar Firmas
+              </Link>
+              <Link 
+                to="/recursos" 
+                className="border-2 border-white hover:bg-white hover:text-purple-900 text-white px-10 py-4 rounded-lg text-lg font-semibold transition-all inline-block"
+              >
+                Recursos Gratuitos
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+
+      {/* Widget Container */}
+      <div className="bg-black border-t border-b border-gray-800">
+        <div 
+          id="tradingview-widget"
+          style={{ 
+            height: '42px',
+            width: '100%',
+            position: 'relative',
+            overflow: 'hidden'
+          }}
+        />
+      </div>
+
+      <div className="h-1 bg-gradient-to-b from-black/20 to-transparent"></div>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
@@ -15,30 +15,31 @@ import TopFirmStrip from './components/TopFirmStrip';
 import FirmDetail from './components/FirmDetail';
 import FirmDetailExtended from './components/FirmDetailExtended';
 import Papa from 'papaparse';
-import { Firm } from './backend/types';
+import { Firm, Filters } from './backend/types';
 import './index.css'
 
 const App: React.FC = () => {
-  const [firms, setFirms] = useState<Firm[]>([]);
-  const [filteredFirms, setFilteredFirms] = useState<Firm[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filters, setFilters] = useState({
-    accountSize: '',
-    steps: '',
-    applyDiscount: false,
+  const [allFirms, setAllFirms] = useState<Firm[]>([]);
+  const [filters, setFilters] = useState<Filters>({
+    accountSizes: [],
+    steps: [],
+    platforms: [],
+    instruments: [],
+    brokers: [],
+    maxDrawdown: [],
+    tradingDays: []
   });
 
+  // Cargar datos iniciales
   useEffect(() => {
     Papa.parse('/pro_firm_details_v2-profirm_gps_v1.csv', {
       download: true,
       header: true,
       skipEmptyLines: true,
       complete: (result) => {
-        if (Array.isArray(result.data) && result.data.length > 0 && typeof result.data[0] === 'object') {
-          setFirms(result.data as Firm[]);
-          setFilteredFirms(result.data as Firm[]);
-        } else {
-          console.error('Error: La estructura de datos no es válida.');
+        if (Array.isArray(result.data) && result.data.length > 0) {
+          console.log('Datos CSV cargados:', result.data); // Debug
+          setAllFirms(result.data as Firm[]);
         }
       },
       error: (error) => {
@@ -47,58 +48,72 @@ const App: React.FC = () => {
     });
   }, []);
 
-  useEffect(() => {
-    const filtered = firms.filter((firm) => {
-      const accountSize = typeof firm['ACCOUNT SIZE'] === 'string' ? firm['ACCOUNT SIZE'].toLowerCase() : '';
-      const profitTarget = typeof firm['PROFIT TARGET'] === 'string' ? firm['PROFIT TARGET'].toLowerCase() : '';
+  // Función mejorada de filtrado
+  const displayedFirms = useMemo(() => {
+    return allFirms.filter(firm => {
+      // Filtro de tamaño de cuenta
+      const matchesAccountSize = filters.accountSizes.length === 0 || 
+        filters.accountSizes.some(size => {
+          const firmSize = String(firm['ACCOUNT SIZE'] || '').trim();
+          // Extraer solo el número y K del tamaño de la cuenta
+          const firmSizeBase = firmSize.split(' ')[0];
+          return firmSizeBase === size;
+        });
 
-      const matchesAccount = filters.accountSize ? accountSize.includes(filters.accountSize.toLowerCase()) : true;
-      const matchesSteps = filters.steps ? profitTarget.includes(filters.steps.toLowerCase()) : true;
-      const matchesSearchTerm = searchTerm ? firm['FIRM']?.toString().toLowerCase().includes(searchTerm.toLowerCase()) : true;
+      // Filtro de pasos
+      const matchesSteps = filters.steps.length === 0 || 
+        filters.steps.some(step => {
+          const firmSteps = String(firm.STEPS || '').trim();
+          return firmSteps === step;
+        });
 
-      return matchesAccount && matchesSteps && matchesSearchTerm;
+      // Filtro de plataformas
+      const matchesPlatform = filters.platforms.length === 0 || 
+        filters.platforms.some(platform => 
+          String(firm['Trading Platforms']|| '').toLowerCase().includes(platform.toLowerCase())
+        );
+
+      // Filtro de instrumentos
+      const matchesInstruments = filters.instruments.length === 0 || 
+        filters.instruments.some(instrument => 
+          String(firm.INSTRUMENTS || '').toLowerCase().includes(instrument.toLowerCase())
+        );
+
+      // Filtro de brokers
+      const matchesBroker = filters.brokers.length === 0 || 
+        filters.brokers.some(broker => 
+          String(firm['Broker'] || '').trim() === broker.trim()
+        );
+
+      // Filtro de drawdown
+      const matchesDrawdown = filters.maxDrawdown.length === 0 || 
+        filters.maxDrawdown.some(drawdown => {
+          const firmDrawdown = String(firm['MAX. TOTAL DRAWDOWN'] || '').replace('%', '');
+          return firmDrawdown === drawdown.replace('%', '');
+        });
+
+      // Filtro de días de trading
+      const matchesTradingDays = filters.tradingDays.length === 0 || 
+        filters.tradingDays.some(days => 
+          String(firm['MINIMUN TRADING DAYS']) === days
+        );
+
+      return matchesAccountSize && matchesSteps && matchesPlatform && 
+             matchesInstruments && matchesBroker && matchesDrawdown && 
+             matchesTradingDays;
     });
+  }, [allFirms, filters]);
 
-    setFilteredFirms(filtered);
-  }, [filters, searchTerm, firms]);
+  // Agregar console.log para debugging
+  useEffect(() => {
+    console.log('Filtros actuales:', filters);
+    console.log('Firms filtradas:', displayedFirms);
+  }, [filters, displayedFirms]);
 
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-  };
-
-  const handleFilterChange = (newFilters: {
-    accountSize: string;
-    steps: string;
-    applyDiscount: boolean;
-  }) => {
+  const handleFilterChange = (newFilters: Filters) => {
+    console.log('Aplicando nuevos filtros:', newFilters); // Debug
     setFilters(newFilters);
   };
-
-  // Componente Home separado para mejor organización
-  const Home = () => (
-    <>
-      <HeroSection />
-      <div className="w-full px-2 sm:px-4 py-8">
-        <div className="mb-8">
-          <SearchBar onSearch={handleSearch} />
-        </div>
-        <div className="flex flex-col lg:flex-row gap-4">
-          <div className="lg:w-1/4">
-            <FilterPanel onFilterChange={handleFilterChange} />
-          </div>
-          <div className="lg:w-3/4 overflow-x-auto">
-            <FirmTable firms={filteredFirms} />
-          </div>
-        </div>
-        <div className="mt-12">
-          <InfoCards />
-        </div>
-        <div className="mt-10">
-          <Reviews />
-        </div>
-      </div>
-    </>
-  );
 
   return (
     <Router>
@@ -106,9 +121,15 @@ const App: React.FC = () => {
         <Navbar />
         <main className="flex-grow">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={
+              <Home 
+                firms={allFirms}
+                displayedFirms={displayedFirms}
+                onFilterChange={handleFilterChange}
+                currentFilters={filters}
+              />
+            } />
             <Route path="/articulos/*" element={<ArticlesPage />} />
-            {/* En tu Router */}
             <Route path="/comparaciones" element={<ComparisonCards />} />
             <Route path="/comparacion/:slug" element={<ComparisonDetail />} />
             <Route path="/top-firms" element={<TopFirmStrip />} />
@@ -121,5 +142,40 @@ const App: React.FC = () => {
     </Router>
   );
 };
+
+// Componente Home separado
+const Home: React.FC<{
+  firms: Firm[];
+  displayedFirms: Firm[];
+  onFilterChange: (filters: Filters) => void;
+  currentFilters: Filters;
+}> = ({ firms, displayedFirms, onFilterChange, currentFilters }) => (
+  <>
+    <HeroSection />
+    <div className="w-full px-2 sm:px-4 py-8">
+      <div className="mb-8">
+        <SearchBar onSearch={() => {}} />
+      </div>
+      <div className="flex flex-col lg:flex-row gap-4">
+        <div className="lg:w-1/4">
+          <FilterPanel 
+            onFilterChange={onFilterChange}
+            firms={firms}
+            currentFilters={currentFilters}
+          />
+        </div>
+        <div className="lg:w-3/4 overflow-x-auto">
+          <FirmTable firms={displayedFirms} />
+        </div>
+      </div>
+      <div className="mt-12">
+        <InfoCards />
+      </div>
+      <div className="mt-10">
+        <Reviews />
+      </div>
+    </div>
+  </>
+);
 
 export default App;

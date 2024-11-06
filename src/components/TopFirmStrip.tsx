@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { FaExternalLinkAlt, FaInfoCircle, FaStar, FaTimes } from 'react-icons/fa';
 import useReviews from '../hooks/useReviews';
 

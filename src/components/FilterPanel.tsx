@@ -1,1066 +1,279 @@
-// // import React, { useState } from 'react';
-
-// // const FilterPanel: React.FC = () => {
-// //   const [selectedAsset, setSelectedAsset] = useState<string>('');
-// //   const [selectedAccount, setSelectedAccount] = useState<string>('');
-// //   const [selectedSteps, setSelectedSteps] = useState<string>('');
-// //   const [applyDiscount, setApplyDiscount] = useState<boolean>(false);
-
-// //   const assetTypes = ['Forex', 'Futuros', 'Acciones', 'Cripto', 'Índices', 'Materias primas'];
-// //   const accountSizes = ['5K', '10K', '25K', '50K', '100K', '200K', '300K', '400K', '500K'];
-// //   const steps = ['Instantánea', '1 Paso', '2 Pasos', '3 Pasos'];
-
-// //   return (
-// //     <div className="bg-purple-900 text-white p-6 rounded-lg">
-// //       <h2 className="text-2xl font-bold mb-4">¿Qué plan quiere comparar?</h2>
-      
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Seleccione el tipo de activo</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {assetTypes.map((asset) => (
-// //             <button
-// //               key={asset}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedAsset === asset ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => setSelectedAsset(asset)}
-// //             >
-// //               {asset}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Seleccione el tamaño de su cuenta</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {accountSizes.map((size) => (
-// //             <button
-// //               key={size}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedAccount === size ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => setSelectedAccount(size)}
-// //             >
-// //               {size}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Número de pasos</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {steps.map((step) => (
-// //             <button
-// //               key={step}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedSteps === step ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => setSelectedSteps(step)}
-// //             >
-// //               {step}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Promoción Cuenta Extra</p>
-// //         <div className="bg-gray-700 p-2 rounded text-sm">
-// //           +1 Cuenta de desafío gratuita si alcanza el pago
-// //         </div>
-// //       </div>
-
-// //       <div className="mb-6 flex items-center">
-// //         <label className="flex items-center cursor-pointer">
-// //           <div className="relative">
-// //             <input
-// //               type="checkbox"
-// //               className="sr-only"
-// //               checked={applyDiscount}
-// //               onChange={() => setApplyDiscount(!applyDiscount)}
-// //             />
-// //             <div className={`block bg-gray-600 w-14 h-8 rounded-full ${applyDiscount ? 'bg-purple-400' : ''}`}></div>
-// //             <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition ${applyDiscount ? 'transform translate-x-6' : ''}`}></div>
-// //           </div>
-// //           <div className="ml-3 text-gray-300 font-medium text-sm">
-// //             Aplicar descuento
-// //           </div>
-// //         </label>
-// //       </div>
-
-// //       <button className="w-full bg-pink-500 text-white py-3 rounded-lg font-bold hover:bg-pink-600 transition duration-300">
-// //         Buscar ahora
-// //       </button>
-// //     </div>
-// //   );
-// // };
-
-// // export default FilterPanel;
-
-// // import React, { useState } from 'react';
-
-// // interface FilterPanelProps {
-// //   onFilterChange: (filters: {
-// //     assetType: string;
-// //     accountSize: string;
-// //     steps: string;
-// //     applyDiscount: boolean;
-// //   }) => void;
-// // }
-
-// // const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange }) => {
-// //   const [selectedAsset, setSelectedAsset] = useState<string>('');
-// //   const [selectedAccount, setSelectedAccount] = useState<string>('');
-// //   const [selectedSteps, setSelectedSteps] = useState<string>('');
-// //   const [applyDiscount, setApplyDiscount] = useState<boolean>(false);
-
-// //   const assetTypes = ['Forex', 'Futuros', 'Acciones', 'Cripto', 'Índices', 'Materias primas'];
-// //   const accountSizes = ['5K', '10K', '25K', '50K', '100K', '200K', '300K', '400K', '500K'];
-// //   const steps = ['Instantánea', '1 Paso', '2 Pasos', '3 Pasos'];
-
-// //   const updateFilters = () => {
-// //     onFilterChange({
-// //       assetType: selectedAsset,
-// //       accountSize: selectedAccount,
-// //       steps: selectedSteps,
-// //       applyDiscount,
-// //     });
-// //   };
-
-// //   return (
-// //     <div className="bg-purple-900 text-white p-6 rounded-lg">
-// //       <h2 className="text-2xl font-bold mb-4">¿Qué plan quiere comparar?</h2>
-
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Seleccione el tipo de activo</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {assetTypes.map((asset) => (
-// //             <button
-// //               key={asset}
-// //               className={`px-4 py-2 rounded-full text-sm ${selectedAsset === asset ? 'bg-purple-500' : 'bg-gray-700'}`}
-// //               onClick={() => {
-// //                 setSelectedAsset(asset);
-// //                 updateFilters();
-// //               }}
-// //             >
-// //               {asset}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Seleccione el tamaño de su cuenta</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {accountSizes.map((size) => (
-// //             <button
-// //               key={size}
-// //               className={`px-4 py-2 rounded-full text-sm ${selectedAccount === size ? 'bg-purple-500' : 'bg-gray-700'}`}
-// //               onClick={() => {
-// //                 setSelectedAccount(size);
-// //                 updateFilters();
-// //               }}
-// //             >
-// //               {size}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Número de pasos</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {steps.map((step) => (
-// //             <button
-// //               key={step}
-// //               className={`px-4 py-2 rounded-full text-sm ${selectedSteps === step ? 'bg-purple-500' : 'bg-gray-700'}`}
-// //               onClick={() => {
-// //                 setSelectedSteps(step);
-// //                 updateFilters();
-// //               }}
-// //             >
-// //               {step}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-// //     </div>
-// //   );
-// // };
-
-// // export default FilterPanel;
-
-// // import React, { useState } from 'react';
-
-// // interface FilterPanelProps {
-// //   onFilterChange: (filters: {
-// //     assetType: string;
-// //     accountSize: string;
-// //     steps: string;
-// //     applyDiscount: boolean;
-// //   }) => void;
-// // }
-
-// // const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange }) => {
-// //   const [selectedAsset, setSelectedAsset] = useState<string>('');
-// //   const [selectedAccount, setSelectedAccount] = useState<string>('');
-// //   const [selectedSteps, setSelectedSteps] = useState<string>('');
-// //   const [applyDiscount, setApplyDiscount] = useState<boolean>(false);
-
-// //   const assetTypes = ['Forex', 'Futuros', 'Acciones', 'Cripto', 'Índices', 'Materias primas'];
-// //   const accountSizes = ['5K', '10K', '25K', '50K', '100K', '200K', '300K', '400K', '500K'];
-// //   const steps = ['Instantánea', '1 Paso', '2 Pasos', '3 Pasos'];
-
-// //   const updateFilters = () => {
-// //     onFilterChange({
-// //       assetType: selectedAsset,
-// //       accountSize: selectedAccount,
-// //       steps: selectedSteps,
-// //       applyDiscount,
-// //     });
-// //   };
-
-// //   const toggleSelection = (currentValue: string, selectedValue: string, setSelected: (value: string) => void) => {
-// //     setSelected(currentValue === selectedValue ? '' : selectedValue);
-// //     updateFilters();
-// //   };
-
-// //   return (
-// //     <div className="bg-purple-900 text-white p-6 rounded-lg">
-// //       <h2 className="text-2xl font-bold mb-4">¿Qué plan quiere comparar?</h2>
-
-// //       {/* Filtro por tipo de activo */}
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Seleccione el tipo de activo</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {assetTypes.map((asset) => (
-// //             <button
-// //               key={asset}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedAsset === asset ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => toggleSelection(selectedAsset, asset, setSelectedAsset)}
-// //             >
-// //               {asset}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       {/* Filtro por tamaño de cuenta */}
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Seleccione el tamaño de su cuenta</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {accountSizes.map((size) => (
-// //             <button
-// //               key={size}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedAccount === size ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => toggleSelection(selectedAccount, size, setSelectedAccount)}
-// //             >
-// //               {size}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       {/* Filtro por número de pasos */}
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Número de pasos</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {steps.map((step) => (
-// //             <button
-// //               key={step}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedSteps === step ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => toggleSelection(selectedSteps, step, setSelectedSteps)}
-// //             >
-// //               {step}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       {/* Filtro por descuento */}
-// //       <div className="mb-6 flex items-center">
-// //         <label className="flex items-center cursor-pointer">
-// //           <div className="relative">
-// //             <input
-// //               type="checkbox"
-// //               className="sr-only"
-// //               checked={applyDiscount}
-// //               onChange={() => {
-// //                 setApplyDiscount(!applyDiscount);
-// //                 updateFilters();
-// //               }}
-// //             />
-// //             <div className={`block bg-gray-600 w-14 h-8 rounded-full ${applyDiscount ? 'bg-purple-400' : ''}`}></div>
-// //             <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition ${
-// //               applyDiscount ? 'transform translate-x-6' : ''
-// //             }`}></div>
-// //           </div>
-// //           <div className="ml-3 text-gray-300 font-medium text-sm">
-// //             Aplicar descuento
-// //           </div>
-// //         </label>
-// //       </div>
-// //     </div>
-// //   );
-// // };
-
-// // export default FilterPanel;
-
-// // import React, { useState } from 'react';
-
-// // interface FilterPanelProps {
-// //   onFilterChange: (filters: {
-// //     assetType: string;
-// //     accountSize: string;
-// //     steps: string;
-// //     applyDiscount: boolean;
-// //   }) => void;
-// // }
-
-// // const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange }) => {
-// //   const [selectedAsset, setSelectedAsset] = useState<string>('');
-// //   const [selectedAccount, setSelectedAccount] = useState<string>('');
-// //   const [selectedSteps, setSelectedSteps] = useState<string>('');
-// //   const [applyDiscount, setApplyDiscount] = useState<boolean>(false);
-
-// //   const assetTypes = ['Forex', 'Futuros', 'Acciones', 'Cripto', 'Índices', 'Materias primas'];
-// //   const accountSizes = ['5K', '10K', '25K', '50K', '100K', '200K', '300K', '400K', '500K'];
-// //   const steps = ['Instantánea', '1 Paso', '2 Pasos', '3 Pasos'];
-
-// //   const updateFilters = () => {
-// //     onFilterChange({
-// //       assetType: selectedAsset,
-// //       accountSize: selectedAccount,
-// //       steps: selectedSteps,
-// //       applyDiscount,
-// //     });
-// //   };
-
-// //   const toggleSelection = (currentValue: string, selectedValue: string, setSelected: (value: string) => void) => {
-// //     setSelected(currentValue === selectedValue ? '' : selectedValue);
-// //     updateFilters();
-// //   };
-
-// //   // Función para resetear todos los filtros
-// //   const resetFilters = () => {
-// //     setSelectedAsset('');
-// //     setSelectedAccount('');
-// //     setSelectedSteps('');
-// //     setApplyDiscount(false);
-// //     onFilterChange({ assetType: '', accountSize: '', steps: '', applyDiscount: false });
-// //   };
-
-// //   return (
-// //     <div className="bg-purple-900 text-white p-6 rounded-lg">
-// //       <h2 className="text-2xl font-bold mb-4">¿Qué plan quiere comparar?</h2>
-
-// //       {/* Filtro por tipo de activo */}
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Seleccione el tipo de activo</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {assetTypes.map((asset) => (
-// //             <button
-// //               key={asset}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedAsset === asset ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => toggleSelection(selectedAsset, asset, setSelectedAsset)}
-// //             >
-// //               {asset}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       {/* Filtro por tamaño de cuenta */}
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Seleccione el tamaño de su cuenta</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {accountSizes.map((size) => (
-// //             <button
-// //               key={size}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedAccount === size ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => toggleSelection(selectedAccount, size, setSelectedAccount)}
-// //             >
-// //               {size}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       {/* Filtro por número de pasos */}
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Número de pasos</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {steps.map((step) => (
-// //             <button
-// //               key={step}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedSteps === step ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => toggleSelection(selectedSteps, step, setSelectedSteps)}
-// //             >
-// //               {step}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       {/* Filtro por descuento */}
-// //       <div className="mb-6 flex items-center">
-// //         <label className="flex items-center cursor-pointer">
-// //           <div className="relative">
-// //             <input
-// //               type="checkbox"
-// //               className="sr-only"
-// //               checked={applyDiscount}
-// //               onChange={() => {
-// //                 setApplyDiscount(!applyDiscount);
-// //                 updateFilters();
-// //               }}
-// //             />
-// //             <div className={`block bg-gray-600 w-14 h-8 rounded-full ${applyDiscount ? 'bg-purple-400' : ''}`}></div>
-// //             <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition ${
-// //               applyDiscount ? 'transform translate-x-6' : ''
-// //             }`}></div>
-// //           </div>
-// //           <div className="ml-3 text-gray-300 font-medium text-sm">
-// //             Aplicar descuento
-// //           </div>
-// //         </label>
-// //       </div>
-
-// //       {/* Botón de reset */}
-// //       <button
-// //         className="w-full bg-red-500 text-white py-2 rounded-lg font-bold hover:bg-red-600 transition duration-300"
-// //         onClick={resetFilters}
-// //       >
-// //         Resetear Filtros
-// //       </button>
-// //     </div>
-// //   );
-// // };
-
-// // export default FilterPanel;
-
-// // import React, { useState } from 'react';
-
-// // interface FilterPanelProps {
-// //   onFilterChange: (filters: {
-// //     accountSize: string;
-// //     steps: string;
-// //     applyDiscount: boolean;
-// //   }) => void;
-// // }
-
-// // const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange }) => {
-// //   const [selectedAccountSize, setSelectedAccountSize] = useState<string>('');
-// //   const [selectedSteps, setSelectedSteps] = useState<string>('');
-// //   const [applyDiscount, setApplyDiscount] = useState<boolean>(false);
-
-// //   const accountSizes = ['5K', '10K', '25K', '50K', '100K', '200K', '300K', '400K', '500K'];
-// //   const steps = ['Instantánea', '1 Paso', '2 Pasos', '3 Pasos'];
-
-// //   // Actualizar filtros
-// //   const updateFilters = () => {
-// //     onFilterChange({
-// //       accountSize: selectedAccountSize,
-// //       steps: selectedSteps,
-// //       applyDiscount,
-// //     });
-// //   };
-
-// //   // Alternar selección de filtros
-// //   const toggleSelection = (currentValue: string, selectedValue: string, setSelected: (value: string) => void) => {
-// //     const newValue = currentValue === selectedValue ? '' : selectedValue;
-// //     setSelected(newValue);
-// //     setTimeout(updateFilters, 0); // Actualizar filtros después de cambiar el estado
-// //   };
-
-// //   // Función para resetear todos los filtros
-// //   const resetFilters = () => {
-// //     setSelectedAccountSize('');
-// //     setSelectedSteps('');
-// //     setApplyDiscount(false);
-// //     onFilterChange({ accountSize: '', steps: '', applyDiscount: false });
-// //   };
-
-// //   return (
-// //     <div className="bg-purple-900 text-white p-6 rounded-lg">
-// //       <h2 className="text-2xl font-bold mb-4">¿Qué plan quiere comparar?</h2>
-
-// //       {/* Filtro por tamaño de cuenta */}
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Tamaño de cuenta</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {accountSizes.map((size) => (
-// //             <button
-// //               key={size}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedAccountSize === size ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => toggleSelection(selectedAccountSize, size, setSelectedAccountSize)}
-// //             >
-// //               {size}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       {/* Filtro por número de cuentas (steps) */}
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Número de cuentas</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {steps.map((step) => (
-// //             <button
-// //               key={step}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedSteps === step ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => toggleSelection(selectedSteps, step, setSelectedSteps)}
-// //             >
-// //               {step}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       {/* Filtro por descuento */}
-// //       <div className="mb-6 flex items-center">
-// //         <label className="flex items-center cursor-pointer">
-// //           <div className="relative">
-// //             <input
-// //               type="checkbox"
-// //               className="sr-only"
-// //               checked={applyDiscount}
-// //               onChange={() => {
-// //                 setApplyDiscount(!applyDiscount);
-// //                 setTimeout(updateFilters, 0); // Actualizar filtros después del cambio
-// //               }}
-// //             />
-// //             <div className={`block bg-gray-600 w-14 h-8 rounded-full ${applyDiscount ? 'bg-purple-400' : ''}`}></div>
-// //             <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition ${
-// //               applyDiscount ? 'transform translate-x-6' : ''
-// //             }`}></div>
-// //           </div>
-// //           <span className="ml-3 text-gray-300 font-medium text-sm">
-// //             Aplicar descuento
-// //           </span>
-// //         </label>
-// //       </div>
-
-// //       {/* Botón de reset */}
-// //       <button
-// //         className="w-full bg-red-500 text-white py-2 rounded-lg font-bold hover:bg-red-600 transition duration-300"
-// //         onClick={resetFilters}
-// //       >
-// //         Resetear Filtros
-// //       </button>
-// //     </div>
-// //   );
-// // };
-
-// // export default FilterPanel;
-
-// // import React, { useState } from 'react';
-
-// // interface FilterPanelProps {
-// //   onFilterChange: (filters: {
-// //     accountSize: string;
-// //     steps: string;
-// //     applyDiscount: boolean;
-// //   }) => void;
-// // }
-
-// // const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange }) => {
-// //   const [selectedAccountSize, setSelectedAccountSize] = useState<string>('');
-// //   const [selectedSteps, setSelectedSteps] = useState<string>('');
-// //   const [applyDiscount, setApplyDiscount] = useState<boolean>(false);
-
-// //   const accountSizes = ['5K', '10K', '25K', '50K', '100K', '200K', '300K', '400K', '500K'];
-// //   const steps = ['Instantánea', '1 Paso', '2 Pasos', '3 Pasos'];
-
-// //   // Actualizar filtros
-// //   const updateFilters = () => {
-// //     onFilterChange({
-// //       accountSize: selectedAccountSize,
-// //       steps: selectedSteps,
-// //       applyDiscount,
-// //     });
-// //   };
-
-// //   const toggleSelection = (currentValue: string, selectedValue: string, setSelected: (value: string) => void) => {
-// //     const newValue = currentValue === selectedValue ? '' : selectedValue;
-// //     setSelected(newValue);
-// //     setTimeout(updateFilters, 0); // Actualizar filtros después del cambio de estado
-// //   };
-
-// //   const resetFilters = () => {
-// //     setSelectedAccountSize('');
-// //     setSelectedSteps('');
-// //     setApplyDiscount(false);
-// //     onFilterChange({ accountSize: '', steps: '', applyDiscount: false });
-// //   };
-
-// //   return (
-// //     <div className="bg-purple-900 text-white p-6 rounded-lg">
-// //       <h2 className="text-2xl font-bold mb-4">¿Qué plan quiere comparar?</h2>
-
-// //       {/* Filtro por tamaño de cuenta */}
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Tamaño de cuenta</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {accountSizes.map((size) => (
-// //             <button
-// //               key={size}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedAccountSize === size ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => toggleSelection(selectedAccountSize, size, setSelectedAccountSize)}
-// //             >
-// //               {size}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       {/* Filtro por número de cuentas (steps) */}
-// //       <div className="mb-4">
-// //         <p className="mb-2 font-semibold">Número de cuentas</p>
-// //         <div className="flex flex-wrap gap-2">
-// //           {steps.map((step) => (
-// //             <button
-// //               key={step}
-// //               className={`px-4 py-2 rounded-full text-sm ${
-// //                 selectedSteps === step ? 'bg-purple-500' : 'bg-gray-700'
-// //               }`}
-// //               onClick={() => toggleSelection(selectedSteps, step, setSelectedSteps)}
-// //             >
-// //               {step}
-// //             </button>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       {/* Filtro por descuento */}
-// //       <div className="mb-6 flex items-center">
-// //         <label className="flex items-center cursor-pointer">
-// //           <div className="relative">
-// //             <input
-// //               type="checkbox"
-// //               className="sr-only"
-// //               checked={applyDiscount}
-// //               onChange={() => {
-// //                 setApplyDiscount(!applyDiscount);
-// //                 setTimeout(updateFilters, 0); // Actualizar filtros después del cambio de estado
-// //               }}
-// //             />
-// //             <div className={`block bg-gray-600 w-14 h-8 rounded-full ${applyDiscount ? 'bg-purple-400' : ''}`}></div>
-// //             <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition ${
-// //               applyDiscount ? 'transform translate-x-6' : ''
-// //             }`}></div>
-// //           </div>
-// //           <span className="ml-3 text-gray-300 font-medium text-sm">
-// //             Aplicar descuento
-// //           </span>
-// //         </label>
-// //       </div>
-
-// //       {/* Botón de reset */}
-// //       <button
-// //         className="w-full bg-red-500 text-white py-2 rounded-lg font-bold hover:bg-red-600 transition duration-300"
-// //         onClick={resetFilters}
-// //       >
-// //         Resetear Filtros
-// //       </button>
-// //     </div>
-// //   );
-// // };
-
-// // export default FilterPanel;
-
-
-// import React, { useState } from 'react';
-
-// interface FilterPanelProps {
-//   onFilterChange: (filters: {
-//     accountSize: string;
-//     steps: string;
-//     applyDiscount: boolean;
-//   }) => void;
-// }
-
-// const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange }) => {
-//   const [selectedAccountSize, setSelectedAccountSize] = useState<string>('');
-//   const [selectedSteps, setSelectedSteps] = useState<string>('');
-//   const [applyDiscount, setApplyDiscount] = useState<boolean>(false);
-
-//   const accountSizes = ['5K', '10K', '25K', '50K', '100K', '200K', '300K', '400K', '500K'];
-//   const steps = ['Instantánea', '1 Paso', '2 Pasos', '3 Pasos'];
-
-//   // Actualizar filtros
-//   const updateFilters = (newAccountSize = selectedAccountSize, newSteps = selectedSteps, newDiscount = applyDiscount) => {
-//     onFilterChange({
-//       accountSize: newAccountSize,
-//       steps: newSteps,
-//       applyDiscount: newDiscount,
-//     });
-//   };
-
-//   const toggleSelection = (currentValue: string, selectedValue: string, setSelected: (value: string) => void) => {
-//     const newValue = currentValue === selectedValue ? '' : selectedValue;
-//     setSelected(newValue);
-//     updateFilters(
-//       selectedAccountSize === selectedValue ? '' : selectedAccountSize,
-//       selectedSteps === selectedValue ? '' : selectedSteps,
-//       applyDiscount
-//     );
-//   };
-
-//   const resetFilters = () => {
-//     setSelectedAccountSize('');
-//     setSelectedSteps('');
-//     setApplyDiscount(false);
-//     onFilterChange({ accountSize: '', steps: '', applyDiscount: false });
-//   };
-
-//   return (
-//     <div className="bg-purple-900 text-white p-6 rounded-lg">
-//       <h2 className="text-2xl font-bold mb-4">¿Qué plan quiere comparar?</h2>
-
-//       {/* Filtro por tamaño de cuenta */}
-//       <div className="mb-4">
-//         <p className="mb-2 font-semibold">Tamaño de cuenta</p>
-//         <div className="flex flex-wrap gap-2">
-//           {accountSizes.map((size) => (
-//             <button
-//               key={size}
-//               className={`px-4 py-2 rounded-full text-sm ${
-//                 selectedAccountSize === size ? 'bg-purple-500' : 'bg-gray-700'
-//               }`}
-//               onClick={() => toggleSelection(selectedAccountSize, size, setSelectedAccountSize)}
-//             >
-//               {size}
-//             </button>
-//           ))}
-//         </div>
-//       </div>
-
-//       {/* Filtro por número de cuentas (steps) */}
-//       <div className="mb-4">
-//         <p className="mb-2 font-semibold">Número de cuentas</p>
-//         <div className="flex flex-wrap gap-2">
-//           {steps.map((step) => (
-//             <button
-//               key={step}
-//               className={`px-4 py-2 rounded-full text-sm ${
-//                 selectedSteps === step ? 'bg-purple-500' : 'bg-gray-700'
-//               }`}
-//               onClick={() => toggleSelection(selectedSteps, step, setSelectedSteps)}
-//             >
-//               {step}
-//             </button>
-//           ))}
-//         </div>
-//       </div>
-
-//       {/* Filtro por descuento */}
-//       <div className="mb-6 flex items-center">
-//         <label className="flex items-center cursor-pointer">
-//           <div className="relative">
-//             <input
-//               type="checkbox"
-//               className="sr-only"
-//               checked={applyDiscount}
-//               onChange={() => {
-//                 setApplyDiscount(!applyDiscount);
-//                 updateFilters(selectedAccountSize, selectedSteps, !applyDiscount);
-//               }}
-//             />
-//             <div className={`block bg-gray-600 w-14 h-8 rounded-full ${applyDiscount ? 'bg-purple-400' : ''}`}></div>
-//             <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition ${
-//               applyDiscount ? 'transform translate-x-6' : ''
-//             }`}></div>
-//           </div>
-//           <span className="ml-3 text-gray-300 font-medium text-sm">
-//             Aplicar descuento
-//           </span>
-//         </label>
-//       </div>
-
-//       {/* Botón de reset */}
-//       <button
-//         className="w-full bg-red-500 text-white py-2 rounded-lg font-bold hover:bg-red-600 transition duration-300"
-//         onClick={resetFilters}
-//       >
-//         Resetear Filtros
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default FilterPanel;
-
-// import React, { useState } from 'react';
-
-// interface FilterPanelProps {
-//   onFilterChange: (filters: {
-//     accountSize: string;
-//     steps: string;
-//     applyDiscount: boolean;
-//   }) => void;
-// }
-
-// const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange }) => {
-//   const [selectedAccountSize, setSelectedAccountSize] = useState<string>('');
-//   const [selectedSteps, setSelectedSteps] = useState<string>('');
-//   const [applyDiscount, setApplyDiscount] = useState<boolean>(false);
-
-//   const accountSizes = ['5K', '10K', '25K', '50K', '100K', '200K', '300K', '400K', '500K'];
-//   const steps = ['Instantánea', '1 Paso', '2 Pasos', '3 Pasos'];
-
-//   const updateFilters = (newAccountSize: string, newSteps: string, newDiscount: boolean) => {
-//     onFilterChange({
-//       accountSize: newAccountSize,
-//       steps: newSteps,
-//       applyDiscount: newDiscount,
-//     });
-//   };
-
-//   const toggleAccountSize = (size: string) => {
-//     const newSize = selectedAccountSize === size ? '' : size;
-//     setSelectedAccountSize(newSize);
-//     updateFilters(newSize, selectedSteps, applyDiscount);
-//   };
-
-//   const toggleSteps = (step: string) => {
-//     const newStep = selectedSteps === step ? '' : step;
-//     setSelectedSteps(newStep);
-//     updateFilters(selectedAccountSize, newStep, applyDiscount);
-//   };
-
-//   const toggleDiscount = () => {
-//     const newDiscount = !applyDiscount;
-//     setApplyDiscount(newDiscount);
-//     updateFilters(selectedAccountSize, selectedSteps, newDiscount);
-//   };
-
-//   const resetFilters = () => {
-//     setSelectedAccountSize('');
-//     setSelectedSteps('');
-//     setApplyDiscount(false);
-//     onFilterChange({ accountSize: '', steps: '', applyDiscount: false });
-//   };
-
-//   return (
-//     <div className="bg-purple-900 text-white p-6 rounded-lg">
-//       <h2 className="text-2xl font-bold mb-4">¿Qué plan quiere comparar?</h2>
-
-//       {/* Filtro por tamaño de cuenta */}
-//       <div className="mb-4">
-//         <p className="mb-2 font-semibold">Tamaño de cuenta</p>
-//         <div className="flex flex-wrap gap-2">
-//           {accountSizes.map((size) => (
-//             <button
-//               key={size}
-//               className={`px-4 py-2 rounded-full text-sm ${
-//                 selectedAccountSize === size ? 'bg-purple-500' : 'bg-gray-700'
-//               }`}
-//               onClick={() => toggleAccountSize(size)}
-//             >
-//               {size}
-//             </button>
-//           ))}
-//         </div>
-//       </div>
-
-//       {/* Filtro por número de cuentas (steps) */}
-//       <div className="mb-4">
-//         <p className="mb-2 font-semibold">Número de cuentas</p>
-//         <div className="flex flex-wrap gap-2">
-//           {steps.map((step) => (
-//             <button
-//               key={step}
-//               className={`px-4 py-2 rounded-full text-sm ${
-//                 selectedSteps === step ? 'bg-purple-500' : 'bg-gray-700'
-//               }`}
-//               onClick={() => toggleSteps(step)}
-//             >
-//               {step}
-//             </button>
-//           ))}
-//         </div>
-//       </div>
-
-//       {/* Filtro por descuento */}
-//       <div className="mb-6 flex items-center">
-//         <label className="flex items-center cursor-pointer">
-//           <div className="relative">
-//             <input
-//               type="checkbox"
-//               className="sr-only"
-//               checked={applyDiscount}
-//               onChange={toggleDiscount}
-//             />
-//             <div className={`block bg-gray-600 w-14 h-8 rounded-full ${applyDiscount ? 'bg-purple-400' : ''}`}></div>
-//             <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition ${
-//               applyDiscount ? 'transform translate-x-6' : ''
-//             }`}></div>
-//           </div>
-//           <span className="ml-3 text-gray-300 font-medium text-sm">
-//             Aplicar descuento
-//           </span>
-//         </label>
-//       </div>
-
-//       {/* Botón de reset */}
-//       <button
-//         className="w-full bg-red-500 text-white py-2 rounded-lg font-bold hover:bg-red-600 transition duration-300"
-//         onClick={resetFilters}
-//       >
-//         Resetear Filtros
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default FilterPanel;
-
-
-import React, { useState } from 'react';
-
-interface FilterPanelProps {
-  onFilterChange: (filters: {
-    accountSize: string;
-    steps: string;
-    applyDiscount: boolean;
-  }) => void;
+import React, { useState, useEffect } from 'react';
+import { Filters, FilterPanelProps} from '../backend/types';
+import { FaFilter, FaChevronDown, FaTimes, FaCheck } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import '../index.css';
+
+interface ActiveFilter {
+  category: string;
+  value: string;
 }
 
-const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange }) => {
-  const [selectedAccountSize, setSelectedAccountSize] = useState<string>('');
-  const [selectedSteps, setSelectedSteps] = useState<string>('');
-  const [applyDiscount, setApplyDiscount] = useState<boolean>(false);
+const BrokerFilter: React.FC<{
+  options: string[];
+  category: keyof Filters;
+  selectedValues: string[];
+  onFilterClick: (e: React.MouseEvent, category: keyof Filters, value: string) => void;
+}> = ({ options, category, selectedValues, onFilterClick }) => (
+  <div className="w-full">
+    <input 
+      type="text" 
+      list="brokers-list"
+      placeholder="Buscar broker..."
+      onChange={(e) => {
+        if (e.target.value) {
+          onFilterClick(e as any, category, e.target.value);
+          e.target.value = ''; // Limpiar input después de seleccionar
+        }
+      }}
+      className="w-full px-4 py-2 rounded-lg text-sm font-medium bg-[#312354] text-gray-300 
+                 border border-[#4e3a77] focus:outline-none focus:border-[#04a8c2]"
+    />
+    <datalist id="brokers-list">
+      {options.map((broker) => (
+        <option key={broker} value={broker} />
+      ))}
+    </datalist>
+    
+    <div className="flex flex-wrap gap-2 mt-2">
+      {selectedValues.map((broker) => (
+        <span
+          key={broker}
+          className="inline-flex items-center px-3 py-2 rounded-lg text-sm bg-gradient-to-r from-[#04a8c2] to-[#67d6e9] text-white"
+        >
+          {broker}
+          <FaTimes
+            className="ml-2 cursor-pointer hover:text-gray-200"
+            onClick={(e) => onFilterClick(e, category, broker)}
+          />
+        </span>
+      ))}
+    </div>
+  </div>
+);
 
-  const accountSizes = ['5K', '10K', '25K', '50K', '100K', '200K', '300K', '400K', '500K'];
-  const steps = ['Instantánea', '1 Paso', '2 Pasos', '3 Pasos'];
+const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, currentFilters }) => {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [localFilters, setLocalFilters] = useState<Filters>(currentFilters);
 
-  // Función para actualizar los filtros con coincidencias exactas
-  const updateFilters = (newAccountSize: string, newSteps: string, newDiscount: boolean) => {
-    onFilterChange({
-      accountSize: newAccountSize,
-      steps: newSteps,
-      applyDiscount: newDiscount,
+  // Sincronizar localFilters con currentFilters
+  useEffect(() => {
+    setLocalFilters(currentFilters);
+  }, [currentFilters]);
+
+  // Obtener valores únicos de las firms para los filtros
+  const filterOptions: Record<keyof Filters, string[]> = {
+    accountSizes: ['5K', '10K', '25K', '50K', '100K', '200K'],
+    steps: ['1', '2', '3', 'Instant'],
+    platforms: ['MT4', 'MT5', 'cTrader', 'TradingView'],
+    instruments: ['Forex', 'Índices', 'Materias Primas', 'Criptomonedas', 'Futuros'],
+    brokers: Array.from(new Set(firms
+      .map(firm => String(firm['Broker'] || '').trim())
+      .filter(Boolean)
+    )),
+    maxDrawdown: ['5', '10', '12', '15'],
+    tradingDays: ['5', '30', '60']
+  };
+
+  const handleFilterClick = (e: React.MouseEvent, category: keyof Filters, value: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const newFilters = {
+      ...localFilters,
+      [category]: localFilters[category].includes(value)
+        ? localFilters[category].filter(v => v !== value)
+        : [...localFilters[category], value]
+    };
+    
+    console.log('Filtro seleccionado:', {
+      category,
+      value,
+      currentFilters: localFilters[category],
+      newFilters: newFilters[category]
     });
+    
+    setLocalFilters(newFilters);
+    onFilterChange(newFilters);
   };
 
-  // Alternar selección de tamaño de cuenta
-  const toggleAccountSize = (size: string) => {
-    const newSize = selectedAccountSize === size ? '' : size;
-    setSelectedAccountSize(newSize);
-    updateFilters(newSize, selectedSteps, applyDiscount);
+  const FilterButton: React.FC<{
+    value: string;
+    category: keyof Filters;
+    isSelected: boolean;
+  }> = ({ value, category, isSelected }) => (
+    <motion.button
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleFilterClick(e, category, value);
+      }}
+      className={`
+        px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+        flex items-center justify-between gap-2 min-w-[100px]
+        ${isSelected 
+          ? 'bg-gradient-to-r from-[#04a8c2] to-[#67d6e9] text-white shadow-lg shadow-[#04a8c2]/20' 
+          : 'bg-[#312354] text-gray-300 hover:bg-[#4e3a77] hover:shadow-md'
+        } border border-[#4e3a77]
+      `}
+    >
+      <span>{value}</span>
+      {isSelected && <FaCheck size={12} />}
+    </motion.button>
+  );
+
+  const filterCategories: Record<keyof Filters, string> = {
+    accountSizes: "Tamaño de Cuenta",
+    steps: "Pasos",
+    platforms: "Plataformas",
+    instruments: "Instrumentos",
+    brokers: "Brokers",
+    maxDrawdown: "Drawdown Máximo",
+    tradingDays: "Días de Trading"
   };
 
-  // Alternar selección de pasos
-  const toggleSteps = (step: string) => {
-    const newStep = selectedSteps === step ? '' : step;
-    setSelectedSteps(newStep);
-    updateFilters(selectedAccountSize, newStep, applyDiscount);
-  };
+  // Mostrar filtros activos
+  const ActiveFilters = () => {
+    const activeFilters: ActiveFilter[] = Object.entries(localFilters)
+      .flatMap(([category, values]: [string, string[]]) => 
+        values.map((value: string) => ({
+          category: filterCategories[category as keyof Filters],
+          value
+        }))
+      );
 
-  // Alternar selección de descuento
-  const toggleDiscount = () => {
-    const newDiscount = !applyDiscount;
-    setApplyDiscount(newDiscount);
-    updateFilters(selectedAccountSize, selectedSteps, newDiscount);
-  };
+    if (activeFilters.length === 0) return null;
 
-  // Resetear filtros
-  const resetFilters = () => {
-    setSelectedAccountSize('');
-    setSelectedSteps('');
-    setApplyDiscount(false);
-    onFilterChange({ accountSize: '', steps: '', applyDiscount: false });
+    return (
+      <motion.div 
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-6 p-4 bg-[#312354] rounded-lg border border-[#4e3a77]"
+      >
+        <h3 className="text-sm font-medium text-gray-300 mb-3">Filtros Activos</h3>
+        <div className="flex flex-wrap gap-2">
+          {activeFilters.map(({ category, value }) => (
+            <span
+              key={`${category}-${value}`}
+              className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-[#04a8c2] text-white"
+            >
+              <span className="mr-2 text-xs text-gray-200">{category}:</span>
+              {value}
+            </span>
+          ))}
+        </div>
+      </motion.div>
+    );
   };
 
   return (
-    <div className="bg-purple-900 text-white p-6 rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">¿Qué plan quiere comparar?</h2>
-
-      {/* Filtro por tamaño de cuenta */}
-      <div className="mb-4">
-        <p className="mb-2 font-semibold">Tamaño de cuenta</p>
-        <div className="flex flex-wrap gap-2">
-          {accountSizes.map((size) => (
-            <button
-              key={size}
-              className={`px-4 py-2 rounded-full text-sm ${
-                selectedAccountSize === size ? 'bg-purple-500' : 'bg-gray-700'
-              }`}
-              onClick={() => toggleAccountSize(size)}
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Filtro por número de cuentas (steps) */}
-      <div className="mb-4">
-        <p className="mb-2 font-semibold">Número de pasos</p>
-        <div className="flex flex-wrap gap-2">
-          {steps.map((step) => (
-            <button
-              key={step}
-              className={`px-4 py-2 rounded-full text-sm ${
-                selectedSteps === step ? 'bg-purple-500' : 'bg-gray-700'
-              }`}
-              onClick={() => toggleSteps(step)}
-            >
-              {step}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Filtro por descuento */}
-      <div className="mb-6 flex items-center">
-        <label className="flex items-center cursor-pointer">
-          <div className="relative">
-            <input
-              type="checkbox"
-              className="sr-only"
-              checked={applyDiscount}
-              onChange={toggleDiscount}
-            />
-            <div className={`block bg-gray-600 w-14 h-8 rounded-full ${applyDiscount ? 'bg-purple-400' : ''}`}></div>
-            <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition ${
-              applyDiscount ? 'transform translate-x-6' : ''
-            }`}></div>
-          </div>
-          <span className="ml-3 text-gray-300 font-medium text-sm">
-            Aplicar descuento
-          </span>
-        </label>
-      </div>
-
-      {/* Botón de reset */}
-      <button
-        className="w-full bg-red-500 text-white py-2 rounded-lg font-bold hover:bg-red-600 transition duration-300"
-        onClick={resetFilters}
+    <div className="bg-gradient-to-br from-[#392a63] to-[#2a1e4f] rounded-lg shadow-xl p-6 mb-6 border border-purple-500/10">
+      <motion.div 
+        className="flex justify-between items-center cursor-pointer mb-6"
+        onClick={() => setIsExpanded(!isExpanded)}
+        whileHover={{ scale: 1.01 }}
       >
-        Resetear Filtros
-      </button>
+        <div className="flex items-center space-x-3">
+          <FaFilter className="text-[#04a8c2] text-xl" />
+          <h2 className="text-xl font-bold text-white">Filtros de Búsqueda</h2>
+        </div>
+        <motion.div
+          animate={{ rotate: isExpanded ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <FaChevronDown className="text-[#04a8c2] text-xl" />
+        </motion.div>
+      </motion.div>
+
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ActiveFilters />
+
+            {Object.entries(filterOptions).map(([category, options]) => (
+              <motion.div 
+                key={category}
+                className="mb-8 last:mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <h3 className="text-sm font-medium text-gray-300 mb-4 flex items-center gap-2">
+                  {filterCategories[category as keyof Filters]}
+                  {localFilters[category as keyof Filters].length > 0 && (
+                    <span className="text-xs bg-[#04a8c2] text-white px-2 py-0.5 rounded-full">
+                      {localFilters[category as keyof Filters].length}
+                    </span>
+                  )}
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  {category === 'brokers' ? (
+                    <BrokerFilter
+                      options={options}
+                      category={category as keyof Filters}
+                      selectedValues={localFilters[category as keyof Filters]}
+                      onFilterClick={handleFilterClick}
+                    />
+                  ) : (
+                    options.map((option: string) => (
+                      <FilterButton
+                        key={`${category}-${option}`}
+                        value={option}
+                        category={category as keyof Filters}
+                        isSelected={localFilters[category as keyof Filters].includes(option)}
+                      />
+                    ))
+                  )}
+                </div>
+              </motion.div>
+            ))}
+
+            {Object.values(localFilters).some(arr => arr.length > 0) && (
+              <motion.div 
+                className="flex justify-end mt-6 pt-4 border-t border-purple-500/10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <button
+                  onClick={(e) => {
+                    // Solo aquí permitimos la actualización de la página
+                    setLocalFilters({
+                      accountSizes: [],
+                      steps: [],
+                      platforms: [],
+                      instruments: [],
+                      brokers: [],
+                      maxDrawdown: [],
+                      tradingDays: []
+                    });
+                    onFilterChange({
+                      accountSizes: [],
+                      steps: [],
+                      platforms: [],
+                      instruments: [],
+                      brokers: [],
+                      maxDrawdown: [],
+                      tradingDays: []
+                    });
+                  }}
+                  className="px-6 py-2 bg-[#312354] text-white rounded-lg hover:bg-[#4e3a77] 
+                    transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl"
+                >
+                  <FaTimes size={12} />
+                  <span>Limpiar filtros</span>
+                </button>
+              </motion.div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

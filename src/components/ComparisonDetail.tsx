@@ -1,17 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { FaCheck, FaTimes, FaInfoCircle, FaTrophy } from 'react-icons/fa';
+import { FaCheck, FaTrophy } from 'react-icons/fa';
 
-interface ComparisonMetric {
-  category: string;
-  metrics: {
-    name: string;
-    firm1Value: string | number;
-    firm2Value: string | number;
-    winner: 'firm1' | 'firm2' | 'tie';
-    icon?: React.ReactNode;
-  }[];
-}
 
 const ComparisonDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();

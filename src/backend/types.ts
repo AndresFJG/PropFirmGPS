@@ -96,4 +96,20 @@ export const useReviews = () => {
 
   return { reviews, loading };
 };
+
+export interface Filters {
+  accountSizes: string[];
+  steps: string[];
+  platforms: string[];
+  instruments: string[];
+  brokers: string[];
+  maxDrawdown: string[];
+  tradingDays: string[];
+}
+
+export interface FilterPanelProps {
+  onFilterChange: (filters: Filters) => void;
+  firms: Firm[];
+  currentFilters: Filters;
+}
   

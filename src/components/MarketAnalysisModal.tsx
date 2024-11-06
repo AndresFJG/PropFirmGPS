@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FaTimesCircle, FaChartLine, FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import React from 'react';
+import { FaTimes } from 'react-icons/fa';
 
 interface MarketAnalysisProps {
   article: any;
@@ -46,7 +46,7 @@ const MarketAnalysisModal: React.FC<MarketAnalysisProps> = ({ article, onClose }
               onClick={onClose}
               className="text-gray-400 hover:text-white transition-colors"
             >
-              <FaTimesCircle size={24} />
+              <FaTimes size={24} />
             </button>
           </div>
 

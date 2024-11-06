@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useArticles } from '../hooks/useArticles';
-import { FaChevronDown, FaChartLine, FaTimesCircle } from 'react-icons/fa';
+import { FaChevronDown } from 'react-icons/fa';
 import MarketAnalysisModal from './MarketAnalysisModal';
 
-// Interfaces
+// Interface
 interface Article {
   id: string;
   title: string;

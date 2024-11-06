@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { FaStar, FaCheckCircle, FaExternalLinkAlt, FaChartLine } from 'react-icons/fa';
+import { FaStar, FaCheckCircle, FaExternalLinkAlt } from 'react-icons/fa';
 
 interface FirmDetail {
   name: string;
@@ -29,8 +29,8 @@ interface FirmDetailProps {
 }
 
 const FirmDetailComponent: React.FC<FirmDetailProps> = () => {
+  const [firmData] = useState<FirmDetail | null>(null);
   const { slug } = useParams<{ slug: string }>();
-  const [firmData, setFirmData] = useState<FirmDetail | null>(null);
 
   useEffect(() => {
     const loadFirmData = async () => {
