@@ -117,7 +117,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div className="flex flex-col min-h-screen bg-[#392a63] text-[#04a8c2] bg-purple-gradient">
+      <div className="flex flex-col min-h-screen bg-[#131722] text-[#d1d4dc] font-inter">
         <Navbar />
         <main className="flex-grow">
           <Routes>

@@ -15,9 +15,9 @@ const Modal: React.FC<{ isOpen: boolean; onClose: () => void; firm: Firm | null 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="bg-gradient-to-r from-[#1a1a2e] to-[#392a63] p-8 rounded-2xl shadow-2xl w-11/12 md:w-2/3 lg:w-1/2 border border-purple-500/20">
+      <div className="bg-gradient-to-r from-[#131722] to-[#1e222d] p-8 rounded-2xl shadow-2xl w-11/12 md:w-2/3 lg:w-1/2 border border-[#2962ff]">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-[#04a8c2] to-[#67d6e9] bg-clip-text text-transparent">
+          <h2 className="font-poppins font-semibold">
             {firm['FIRM']}
           </h2>
           <button
@@ -44,7 +44,7 @@ const FirmTable: React.FC<FirmTableProps> = ({ firms, isFilterPanelOpen = false 
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedFirm, setSelectedFirm] = useState<Firm | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const rowsPerPage = 10;
+  const rowsPerPage = 15;
 
   const totalPages = Math.ceil(firms.length / rowsPerPage);
   const currentFirms = firms.slice(
@@ -87,77 +87,78 @@ const FirmTable: React.FC<FirmTableProps> = ({ firms, isFilterPanelOpen = false 
   }, [firms]);
 
   return (
-    <div className={`flex flex-col h-[calc(100vh+8rem)] w-full p-6 bg-gradient-to-br from-[#1a1a2e] to-[#392a63] rounded-lg shadow-xl border border-purple-500/10 
+    <div className={`flex flex-col h-[calc(100vh+12rem)] w-full p-6 bg-[#1e222d] rounded-lg shadow-xl border border-[#2a2e39]/30 
       ${isFilterPanelOpen ? 'lg:w-[calc(100%-320px)]' : 'w-full'} transition-all duration-300`}>
       
       {/* Contenedor de la tabla con scroll */}
-      <div className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-[#04a8c2] scrollbar-track-[#1a1a2e]">
-        <table className="w-full text-white text-sm border-separate border-spacing-0 rounded-xl">
-          <thead>
-            <tr className="text-left bg-gradient-to-r from-[#2a1e4f] to-[#4e3a77]">
-              <th className="py-4 px-6 font-semibold tracking-wider rounded-tl-xl">Firma</th>
-              <th className="py-4 px-6 font-semibold tracking-wider">Precio</th>
-              <th className="py-4 px-6 font-semibold tracking-wider">Cuenta</th>
-              <th className="py-4 px-6 font-semibold tracking-wider hidden md:table-cell">Objetivo</th>
-              <th className="py-4 px-6 font-semibold tracking-wider hidden lg:table-cell">Pérdida Diaria</th>
-              <th className="py-4 px-6 font-semibold tracking-wider hidden lg:table-cell">Pérdida Total</th>
-              <th className="py-4 px-6 font-semibold tracking-wider hidden xl:table-cell">Comisión</th>
-              <th className="py-4 px-6 font-semibold tracking-wider hidden xl:table-cell">Ratio</th>
-              <th className="py-4 px-6 font-semibold tracking-wider">Rating</th>
-              <th className="py-4 px-6 font-semibold tracking-wider rounded-tr-xl">Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentFirms.map((firm, index) => (
-              <tr
-                key={index}
-                className={`border-b border-purple-500/10 hover:bg-purple-600/10 cursor-pointer backdrop-blur-sm
-                  ${index % 2 === 0 ? 'bg-purple-900/5' : 'bg-purple-900/10'} 
-                  transition-all duration-200 ease-in-out`}
-                onClick={() => handleRowClick(firm)}
-              >
-                <td className="py-4 px-6">
-                  <Link to={`/firm/${firm['FIRM']}/details`} className="flex items-center space-x-3">
-                    <img
-                      src={String(firm.logo || '/logo192.png')}
-                      alt={String(firm.name || 'Firma')}
-                      className="w-10 h-10 rounded-lg object-cover border border-purple-500/20"
-                    />
-                    <span className="font-medium text-white hover:text-[#04a8c2] transition-colors duration-200">
-                      {firm['FIRM'] || ''}
-                    </span>
-                  </Link>
-                </td>
-                <td className="py-4 px-6 font-mono">{firm['PRICE'] ? `${firm['PRICE']}` : ''}</td>
-                <td className="py-4 px-6 font-mono">{firm['ACCOUNT SIZE'] ? `${firm['ACCOUNT SIZE']}` : ''}</td>
-                <td className="py-4 px-6 hidden md:table-cell font-mono">{firm['PROFIT TARGET'] || ''}%</td>
-                <td className="py-4 px-6 hidden lg:table-cell font-mono text-red-400">{firm['MAX. DAILY LOSS'] || ''}</td>
-                <td className="py-4 px-6 hidden lg:table-cell font-mono text-red-400">{firm['MAX. TOTAL DRAWDOWN'] || ''}</td>
-                <td className="py-4 px-6 hidden xl:table-cell font-mono">{firm['COMMISION PER ROUND LOT (FOREX)'] || ''}</td>
-                <td className="py-4 px-6 hidden xl:table-cell font-mono">{firm['PROFIT TARGET TO DRAWDOWN RATIO'] || ''}</td>
-                <td className="py-4 px-6">
-                  <div className="flex items-center">
-                    <span className="text-yellow-400 mr-1">★</span>
-                    <span className="font-medium">{firm['Trust Pilot Rating'] || ''}</span>
-                  </div>
-                </td>
-                <td className="py-4 px-6">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      alert(`Comprar: ${firm['FIRM']}`);
-                    }}
-                    className="bg-gradient-to-r from-[#04a8c2] to-[#67d6e9] text-white px-4 py-2 rounded-lg
-                      hover:from-[#67d6e9] hover:to-[#04a8c2] transition-all duration-300 shadow-lg
-                      hover:shadow-[#04a8c2]/20 font-medium"
-                  >
-                    Comprar
-                  </button>
-                </td>
+      <div className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-[#2962ff] scrollbar-track-[#1e222d]">
+        <div className="font-inter">
+          <table className="font-inter w-full text-[#d1d4dc] text-sm border-separate border-spacing-0 rounded-xl">
+            <thead>
+              <tr className="text-left bg-[#131722]">
+                <th className="py-4 px-6 font-semibold tracking-wider rounded-tl-xl">Firma</th>
+                <th className="py-4 px-6 font-semibold tracking-wider">Precio</th>
+                <th className="py-4 px-6 font-semibold tracking-wider">Cuenta</th>
+                <th className="py-4 px-6 font-semibold tracking-wider hidden md:table-cell">Objetivo</th>
+                <th className="py-4 px-6 font-semibold tracking-wider hidden lg:table-cell">Pérdida Diaria</th>
+                <th className="py-4 px-6 font-semibold tracking-wider hidden lg:table-cell">Pérdida Total</th>
+                <th className="py-4 px-6 font-semibold tracking-wider hidden xl:table-cell">Comisión</th>
+                <th className="py-4 px-6 font-semibold tracking-wider hidden xl:table-cell">Ratio</th>
+                <th className="py-4 px-6 font-semibold tracking-wider">Rating</th>
+                <th className="py-4 px-6 font-semibold tracking-wider rounded-tr-xl">Acción</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {currentFirms.map((firm, index) => (
+                <tr
+                  key={index}
+                  className={`border-b border-[#2a2e39]/30 hover:bg-[#2a2e39]/20 cursor-pointer
+                    ${index % 2 === 0 ? 'bg-[#1e222d]/50' : 'bg-[#131722]/50'}`}
+                  onClick={() => handleRowClick(firm)}
+                >
+                  <td className="py-4 px-6">
+                    <Link to={`/firm/${firm['FIRM']}/details`} className="flex items-center space-x-3">
+                      <img
+                        src={String(firm.logo || '/logo192.png')}
+                        alt={String(firm.name || 'Firma')}
+                        className="w-10 h-10 rounded-lg object-cover border border-purple-500/20"
+                      />
+                      <span className="font-medium text-white hover:text-[#04a8c2] transition-colors duration-200">
+                        {firm['FIRM'] || ''}
+                      </span>
+                    </Link>
+                  </td>
+                  <td className="py-4 px-6 font-mono">{firm['PRICE'] ? `${firm['PRICE']}` : ''}</td>
+                  <td className="py-4 px-6 font-mono">{firm['ACCOUNT SIZE'] ? `${firm['ACCOUNT SIZE']}` : ''}</td>
+                  <td className="py-4 px-6 hidden md:table-cell font-mono">{firm['PROFIT TARGET'] || ''}%</td>
+                  <td className="py-4 px-6 hidden lg:table-cell font-mono text-red-400">{firm['MAX. DAILY LOSS'] || ''}</td>
+                  <td className="py-4 px-6 hidden lg:table-cell font-mono text-red-400">{firm['MAX. TOTAL DRAWDOWN'] || ''}</td>
+                  <td className="py-4 px-6 hidden xl:table-cell font-mono">{firm['COMMISION PER ROUND LOT (FOREX)'] || ''}</td>
+                  <td className="py-4 px-6 hidden xl:table-cell font-mono">{firm['PROFIT TARGET TO DRAWDOWN RATIO'] || ''}</td>
+                  <td className="py-4 px-6">
+                    <div className="flex items-center">
+                      <span className="text-yellow-400 mr-1">★</span>
+                      <span className="font-medium">{firm['Trust Pilot Rating'] || ''}</span>
+                    </div>
+                  </td>
+                  <td className="py-4 px-6">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        alert(`Comprar: ${firm['FIRM']}`);
+                      }}
+                      className="bg-gradient-to-r from-[#04a8c2] to-[#67d6e9] text-white px-4 py-2 rounded-lg
+                        hover:from-[#67d6e9] hover:to-[#04a8c2] transition-all duration-300 shadow-lg
+                        hover:shadow-[#04a8c2]/20 font-medium"
+                    >
+                      Comprar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Paginación */}
@@ -165,8 +166,8 @@ const FirmTable: React.FC<FirmTableProps> = ({ firms, isFilterPanelOpen = false 
         <button
           onClick={handlePreviousPage}
           disabled={currentPage === 0}
-          className="flex items-center px-6 py-2 bg-gradient-to-r from-[#04a8c2] to-[#67d6e9] text-white rounded-lg
-            disabled:opacity-50 disabled:cursor-not-allowed hover:from-[#67d6e9] hover:to-[#04a8c2] 
+          className="flex items-center px-6 py-2 bg-gradient-to-r from-[#2962ff] to-[#2979ff] text-white rounded-lg
+            disabled:opacity-50 disabled:cursor-not-allowed hover:from-[#2979ff] hover:to-[#2962ff] 
             transition-all duration-300 font-medium"
         >
           <FaArrowLeft className="mr-2" /> Anterior

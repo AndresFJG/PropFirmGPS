@@ -1,123 +1,122 @@
-/* import React from 'react';
-import { Link } from 'react-router-dom';
-import '../index.css'
-
-const Navbar: React.FC = () => {
-  return (
-    <nav className="text-white py-4 bg-purple-gradient" >
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold text-shadow">ProFirm GPS</Link>
-        <div className="space-x-6">
-          <Link to="/" className="hover:text-pink-300 transition-all">Inicio</Link>
-          <Link to="/compare" className="hover:text-pink-300 transition-all">Comparar Firmas</Link>
-          <Link to="/offers" className="hover:text-pink-300 transition-all">Ofertas</Link>
-          <Link to="/about" className="hover:text-pink-300 transition-all">Sobre Nosotros</Link>
-          <Link to="/contact" className="hover:text-pink-300 transition-all">Contacto</Link>
-          <Link to="/articles" className="hover:text-pink-300 transition-all">Artículos</Link>
-        </div>
-        <div>
-          <button className=" text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-all bg-[#f965a0]">
-            Iniciar Sesión / Registrarse
-          </button>
-        </div>
-      </div>
-    </nav>
-  );
-};
-
-export default Navbar; */
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
 
 const Navbar: React.FC = () => {
   const location = useLocation();
-  
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <>
-      {/* Div espaciador para compensar el navbar fijo */}
+      {/* Espaciador para el navbar fijo */}
       <div className="h-16"></div>
       
-      {/* Navbar fijo */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-purple-900/95 backdrop-blur-sm shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#131722] border-b border-[#2a2e39] backdrop-blur-sm font-inter">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between h-16 px-4 lg:px-8">
+            {/* Logo y nombre */}
+            <div className="flex-shrink-0">
               <Link 
                 to="/" 
-                className="text-white font-bold text-xl hover:text-[#04a8c2] transition-colors duration-200"
+                className="flex items-center space-x-2"
               >
-                ProFirm GPS
+                <span className="text-xl font-bold text-[#d1d4dc] hover:text-[#2962ff] transition-colors duration-200">
+                  PropFirm GPS
+                </span>
               </Link>
-              <div className="hidden md:block ml-10">
-                <div className="flex items-baseline space-x-4">
-                  <Link
-                    to="/"
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                      location.pathname === '/'
-                        ? 'bg-purple-800 text-white shadow-md'
-                        : 'text-gray-300 hover:text-white hover:bg-purple-800/70'
-                    }`}
-                  >
-                    Inicio
-                  </Link>
-                  <Link
-                    to="/articulos"
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                      location.pathname.includes('/articulos')
-                        ? 'bg-purple-800 text-white shadow-md'
-                        : 'text-gray-300 hover:text-white hover:bg-purple-800/70'
-                    }`}
-                  >
-                    Artículos
-                  </Link>
-                  <Link
-                    to="/comparaciones"
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                      location.pathname.includes('/comparaciones')
-                        ? 'bg-purple-800 text-white shadow-md'
-                        : 'text-gray-300 hover:text-white hover:bg-purple-800/70'
-                    }`}
-                  >
-                    Comparaciones
-                  </Link>
-                  <Link
-                    to="/top-firms"
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                      location.pathname.includes('/top-firms')
-                        ? 'bg-purple-800 text-white shadow-md'
-                        : 'text-gray-300 hover:text-white hover:bg-purple-800/70'
-                    }`}
-                  >
-                    Top Firmas
-                  </Link>
-                </div>
-              </div>
             </div>
 
-            {/* Menú móvil - opcional */}
+            {/* Navegación principal - Desktop */}
+            <div className="hidden md:flex md:items-center md:space-x-1">
+              <Link
+                to="/"
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200
+                  ${location.pathname === '/' 
+                    ? 'text-[#2962ff] bg-[#2962ff]/10' 
+                    : 'text-[#d1d4dc] hover:text-[#2962ff] hover:bg-[#2a2e39]'}`}
+              >
+                Inicio
+              </Link>
+              
+              <Link
+                to="/articulos"
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200
+                  ${location.pathname.includes('/articulos') 
+                    ? 'text-[#2962ff] bg-[#2962ff]/10' 
+                    : 'text-[#d1d4dc] hover:text-[#2962ff] hover:bg-[#2a2e39]'}`}
+              >
+                Artículos
+              </Link>
+
+              <Link
+                to="/comparaciones"
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200
+                  ${location.pathname.includes('/comparaciones') 
+                    ? 'text-[#2962ff] bg-[#2962ff]/10' 
+                    : 'text-[#d1d4dc] hover:text-[#2962ff] hover:bg-[#2a2e39]'}`}
+              >
+                Comparaciones
+              </Link>
+
+              <Link
+                to="/top-firms"
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200
+                  ${location.pathname.includes('/top-firms') 
+                    ? 'text-[#2962ff] bg-[#2962ff]/10' 
+                    : 'text-[#d1d4dc] hover:text-[#2962ff] hover:bg-[#2a2e39]'}`}
+              >
+                Top Firmas
+              </Link>
+            </div>
+
+            {/* Botones de acción - Desktop */}
+            <div className="hidden md:flex items-center space-x-2">
+              <button className="px-4 py-2 text-sm font-medium text-[#d1d4dc] hover:text-[#2962ff] hover:bg-[#2a2e39] rounded-md transition-all duration-200">
+                Iniciar Sesión
+              </button>
+              <button className="px-4 py-2 text-sm font-medium text-white bg-[#2962ff] hover:bg-[#2979ff] rounded-md transition-all duration-200">
+                Registrarse
+              </button>
+            </div>
+
+            {/* Botón de menú móvil */}
             <div className="md:hidden">
-              <button className="text-gray-300 hover:text-white p-2">
-                <svg 
-                  className="h-6 w-6" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M4 6h16M4 12h16M4 18h16" 
-                  />
-                </svg>
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="p-2 rounded-md text-[#d1d4dc] hover:text-[#2962ff] hover:bg-[#2a2e39] transition-all duration-200"
+              >
+                {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
               </button>
             </div>
           </div>
-        </div>
 
-        {/* Línea decorativa con gradiente */}
-        <div className="h-[2px] bg-gradient-to-r from-purple-600 via-[#04a8c2] to-purple-600"></div>
+          {/* Menú móvil */}
+          {isMenuOpen && (
+            <div className="md:hidden bg-[#1e222d] border-t border-[#2a2e39]">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <Link
+                  to="/"
+                  className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-200
+                    ${location.pathname === '/' 
+                      ? 'text-[#2962ff] bg-[#2962ff]/10' 
+                      : 'text-[#d1d4dc] hover:text-[#2962ff] hover:bg-[#2a2e39]'}`}
+                >
+                  Inicio
+                </Link>
+                {/* Repetir para otros enlaces */}
+              </div>
+              <div className="px-2 pt-4 pb-3 border-t border-[#2a2e39]">
+                <button className="w-full px-3 py-2 text-base font-medium text-[#d1d4dc] hover:text-[#2962ff] hover:bg-[#2a2e39] rounded-md transition-all duration-200">
+                  Iniciar Sesión
+                </button>
+                <button className="w-full mt-2 px-3 py-2 text-base font-medium text-white bg-[#2962ff] hover:bg-[#2979ff] rounded-md transition-all duration-200">
+                  Registrarse
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </nav>
     </>
   );

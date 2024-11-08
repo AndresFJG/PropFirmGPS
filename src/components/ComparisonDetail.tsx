@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { FaCheck, FaTrophy } from 'react-icons/fa';
-
+import { FaCheck, FaTrophy, FaExchangeAlt } from 'react-icons/fa';
 
 const ComparisonDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -39,29 +38,48 @@ const ComparisonDetail: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Encabezado */}
-      <div className="flex items-center justify-center space-x-8 mb-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-[#131722]">
+      {/* Header con gradiente */}
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-bold font-poppins bg-gradient-to-r from-[#2962ff] to-[#2979ff] text-transparent bg-clip-text mb-4">
+          Comparación Detallada
+        </h2>
+        <div className="w-24 h-1 bg-gradient-to-r from-[#2962ff] to-[#2979ff] mx-auto rounded-full"></div>
+      </div>
+
+      {/* Encabezado de Comparación */}
+      <div className="flex items-center justify-center space-x-12 mb-12">
         <div className="text-center">
-          <img 
-            src={comparisonData.firm1.logo}
-            alt={comparisonData.firm1.name}
-            className="w-24 h-24 object-contain mb-4"
-          />
-          <h2 className="text-2xl font-bold text-white">
+          <div className="w-24 h-24 bg-[#1e222d] rounded-xl p-4 mb-4
+                         border border-[#2a2e39] hover:border-[#2962ff]/30
+                         transition-all duration-300">
+            <img 
+              src={comparisonData.firm1.logo}
+              alt={comparisonData.firm1.name}
+              className="w-full h-full object-contain"
+            />
+          </div>
+          <h2 className="text-2xl font-bold text-[#d1d4dc] font-poppins">
             {comparisonData.firm1.name}
           </h2>
         </div>
 
-        <div className="text-3xl font-bold text-[#04a8c2]">VS</div>
+        <div className="flex items-center justify-center w-16 h-16 rounded-full 
+                      bg-[#2962ff]/10 border border-[#2962ff]/20">
+          <FaExchangeAlt className="text-[#2962ff] text-2xl" />
+        </div>
 
         <div className="text-center">
-          <img 
-            src={comparisonData.firm2.logo}
-            alt={comparisonData.firm2.name}
-            className="w-24 h-24 object-contain mb-4"
-          />
-          <h2 className="text-2xl font-bold text-white">
+          <div className="w-24 h-24 bg-[#1e222d] rounded-xl p-4 mb-4
+                         border border-[#2a2e39] hover:border-[#2962ff]/30
+                         transition-all duration-300">
+            <img 
+              src={comparisonData.firm2.logo}
+              alt={comparisonData.firm2.name}
+              className="w-full h-full object-contain"
+            />
+          </div>
+          <h2 className="text-2xl font-bold text-[#d1d4dc] font-poppins">
             {comparisonData.firm2.name}
           </h2>
         </div>
@@ -70,9 +88,12 @@ const ComparisonDetail: React.FC = () => {
       {/* Tabla de Comparación */}
       <div className="space-y-8">
         {comparisonData.metrics.map((category, idx) => (
-          <div key={idx} className="bg-purple-800/30 rounded-xl overflow-hidden backdrop-blur-sm">
-            <div className="bg-purple-900/50 px-6 py-4">
-              <h3 className="text-xl font-semibold text-white">
+          <div key={idx} className="bg-[#1e222d] rounded-xl overflow-hidden
+                                  border border-[#2a2e39] hover:border-[#2962ff]/30
+                                  transition-all duration-300">
+            <div className="bg-gradient-to-r from-[#2962ff]/10 to-transparent px-6 py-4
+                          border-b border-[#2a2e39]">
+              <h3 className="text-xl font-semibold text-[#d1d4dc] font-poppins">
                 {category.category}
               </h3>
             </div>
@@ -80,38 +101,39 @@ const ComparisonDetail: React.FC = () => {
             <div className="p-6">
               <table className="w-full">
                 <thead>
-                  <tr className="text-gray-300 border-b border-purple-700/50">
-                    <th className="text-left py-3">Característica</th>
-                    <th className="text-center py-3">{comparisonData.firm1.name}</th>
-                    <th className="text-center py-3">{comparisonData.firm2.name}</th>
+                  <tr className="text-[#787b86] border-b border-[#2a2e39]">
+                    <th className="text-left py-3 font-poppins">Característica</th>
+                    <th className="text-center py-3 font-poppins">{comparisonData.firm1.name}</th>
+                    <th className="text-center py-3 font-poppins">{comparisonData.firm2.name}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {category.metrics.map((metric, index) => (
                     <tr 
                       key={index}
-                      className="border-b border-purple-700/30 last:border-0"
+                      className="border-b border-[#2a2e39]/30 last:border-0
+                               hover:bg-[#2962ff]/5 transition-colors duration-200"
                     >
-                      <td className="py-4 flex items-center space-x-2">
+                      <td className="py-4 flex items-center space-x-2 text-[#d1d4dc] font-inter">
                         {metric.icon}
                         <span>{metric.name}</span>
                       </td>
                       <td className={`text-center py-4 ${
-                        metric.winner === 'firm1' ? 'text-green-400' : ''
-                      }`}>
+                        metric.winner === 'firm1' ? 'text-[#2962ff]' : 'text-[#d1d4dc]'
+                      } font-inter`}>
                         <div className="flex items-center justify-center space-x-2">
                           {metric.winner === 'firm1' && (
-                            <FaCheck className="text-green-400" />
+                            <FaCheck className="text-[#2962ff]" />
                           )}
                           <span>{metric.firm1Value}</span>
                         </div>
                       </td>
                       <td className={`text-center py-4 ${
-                        metric.winner === 'firm2' ? 'text-green-400' : ''
-                      }`}>
+                        metric.winner === 'firm2' ? 'text-[#2962ff]' : 'text-[#d1d4dc]'
+                      } font-inter`}>
                         <div className="flex items-center justify-center space-x-2">
                           {metric.winner === 'firm2' && (
-                            <FaCheck className="text-green-400" />
+                            <FaCheck className="text-[#2962ff]" />
                           )}
                           <span>{metric.firm2Value}</span>
                         </div>
@@ -126,13 +148,20 @@ const ComparisonDetail: React.FC = () => {
       </div>
 
       {/* Conclusión */}
-      <div className="mt-12 bg-purple-800/30 rounded-xl p-6 backdrop-blur-sm">
-        <h3 className="text-xl font-semibold text-white mb-4">
-          Conclusión
-        </h3>
-        <p className="text-gray-300">
-          Aquí va un resumen detallado de la comparación...
-        </p>
+      <div className="mt-12 bg-[#1e222d] rounded-xl overflow-hidden
+                     border border-[#2a2e39] hover:border-[#2962ff]/30
+                     transition-all duration-300">
+        <div className="bg-gradient-to-r from-[#2962ff]/10 to-transparent px-6 py-4
+                       border-b border-[#2a2e39]">
+          <h3 className="text-xl font-semibold text-[#d1d4dc] font-poppins">
+            Conclusión
+          </h3>
+        </div>
+        <div className="p-6">
+          <p className="text-[#787b86] font-inter leading-relaxed">
+            Aquí va un resumen detallado de la comparación...
+          </p>
+        </div>
       </div>
     </div>
   );

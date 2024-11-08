@@ -1,44 +1,3 @@
-/* .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
-
-
 .App {
   text-align: center;
 }
@@ -61,11 +20,17 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #E0E1DD; /* Gris claro */
+  color: var(--tv-text-primary);
+  background: linear-gradient(to bottom, var(--tv-bg-primary), var(--tv-bg-secondary));
 }
 
 .App-link {
-  color: #06B6D4; /* Cian */
+  color: var(--tv-accent);
+  transition: color 0.2s ease;
+}
+
+.App-link:hover {
+  color: var(--tv-accent-light);
 }
 
 @keyframes App-logo-spin {
@@ -75,4 +40,30 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Contenedores */
+.card {
+  background-color: var(--tv-bg-secondary);
+  border: 1px solid var(--tv-border);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  border-color: var(--tv-accent);
+  box-shadow: 0 0 10px rgba(41, 98, 255, 0.1);
+}
+
+/* Elementos interactivos */
+.interactive-element {
+  transition: all 0.2s ease;
+}
+
+.interactive-element:hover {
+  background-color: var(--tv-hover);
+}
+
+.interactive-element:active {
+  background-color: var(--tv-active);
 }

@@ -143,18 +143,18 @@ const FirmDetailExtended: React.FC = () => {
         </div>
 
         {/* Tabla de cuentas - ajustada a 6 columnas */}
-        <div className="lg:col-span-6 bg-purple-800/30 rounded-2xl p-8 backdrop-blur-sm shadow-xl shadow-purple-900/20 border border-purple-700/20">
+        <div className="lg:col-span-6 bg-[#1e222d] rounded-2xl p-8 backdrop-blur-sm shadow-xl border border-[#2a2e39]/30">
           <h2 className="text-3xl font-bold text-white mb-8 pb-2 border-b border-purple-700/50">
             Cuentas Disponibles
           </h2>
           <div className="w-full">
-            <table className="w-full text-white border-spacing-y-4 border-separate">
+            <table className="w-full text-[#d1d4dc] border-spacing-y-4 border-separate">
               <thead>
                 <tr>
                   {/* Encabezados con fondo más llamativo y mejor espaciado */}
                   {['Firma', 'Tamaño', 'Precio', 'Split', 'Objetivo', 'P.Diaria', 'P.Total'].map((header) => (
-                    <th key={header} className="bg-purple-900/70 first:rounded-l-lg last:rounded-r-lg py-5 px-6">
-                      <span className="text-base font-semibold uppercase tracking-wider text-purple-100">
+                    <th key={header} className="bg-[#131722] first:rounded-l-lg last:rounded-r-lg py-5 px-6">
+                      <span className="text-base font-semibold uppercase tracking-wider text-[#d1d4dc]">
                         {header}
                       </span>
                     </th>

@@ -169,7 +169,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#392a63] to-[#2a1e4f] rounded-lg shadow-xl p-6 mb-6 border border-purple-500/10">
+    <div className="bg-gradient-to-br from-[#131722] to-[#1e222d] rounded-lg shadow-xl p-6 mb-6 border border-[#2a2e39]/30">
       <motion.div 
         className="flex justify-between items-center cursor-pointer mb-6"
         onClick={() => setIsExpanded(!isExpanded)}

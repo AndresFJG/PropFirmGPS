@@ -84,7 +84,7 @@ const HeroSection: React.FC = () => {
   return (
     <>
       {/* Hero Content */}
-      <div className="relative min-h-[80vh] flex items-center">
+      <div className="relative min-h-[60vh] flex items-center">
         {/* Background Image with Overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center z-0"
@@ -92,15 +92,15 @@ const HeroSection: React.FC = () => {
             backgroundImage: 'url("/trading-background.jpg")',
           }}
         >
-          <div className="absolute inset-0 bg-black bg-opacity-70"></div>
+          <div className="absolute inset-0 bg-[#131722] bg-opacity-90"></div>
         </div>
 
         {/* Content */}
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-8">
-            <h1 className="text-6xl font-bold leading-tight text-white">
+            <h1 className="text-6xl font-bold leading-tight text-[#d1d4dc]">
               Trading Profesional
-              <span className="block text-purple-400 mt-2">A Tu Alcance</span>
+              <span className="block text-[#2962ff] mt-2">A Tu Alcance</span>
             </h1>
             <p className="text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
               Descubre y compara las mejores firmas de trading propietario. 
@@ -109,13 +109,13 @@ const HeroSection: React.FC = () => {
             <div className="flex gap-6 justify-center mt-8">
               <Link 
                 to="/comparaciones" 
-                className="bg-purple-600 hover:bg-purple-700 text-white px-10 py-4 rounded-lg text-lg font-semibold transition-all inline-block"
+                className=" border-2 border-[#2962ff] hover:bg-[#2962ff] text-white px-10 py-4 rounded-lg text-lg font-semibold transition-all inline-block"
               >
                 Comparar Firmas
               </Link>
               <Link 
                 to="/recursos" 
-                className="border-2 border-white hover:bg-white hover:text-purple-900 text-white px-10 py-4 rounded-lg text-lg font-semibold transition-all inline-block"
+                className="border-2 border-white hover:bg-white hover:text-[#2962ff]  text-white px-10 py-4 rounded-lg text-lg font-semibold transition-all inline-block"
               >
                 Recursos Gratuitos
               </Link>

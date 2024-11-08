@@ -1,180 +1,120 @@
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-
-// const Footer: React.FC = () => {
-//   return (
-//     <footer className="bg-gray-800 text-white py-8">
-//       <div className="container mx-auto px-4">
-//         <div className="flex flex-wrap justify-between">
-//           <div className="w-full md:w-1/4 mb-6 md:mb-0">
-//             <h3 className="text-xl font-bold mb-4">ProFirm GPS</h3>
-//             <p className="text-gray-400">Comparando las mejores firmas de trading propietario para ti.</p>
-//           </div>
-//           <div className="w-full md:w-1/4 mb-6 md:mb-0">
-//             <h4 className="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
-//             <ul className="space-y-2">
-//               <li><Link to="/terms" className="text-gray-400 hover:text-pink-400 transition-all">Términos de Servicio</Link></li>
-//               <li><Link to="/privacy" className="text-gray-400 hover:text-pink-400 transition-all">Política de Privacidad</Link></li>
-//               <li><Link to="/faq" className="text-gray-400 hover:text-pink-400 transition-all">Preguntas Frecuentes</Link></li>
-//             </ul>
-//           </div>
-//           <div className="w-full md:w-1/4 mb-6 md:mb-0">
-//             <h4 className="text-lg font-semibold mb-4">Síguenos</h4>
-//             <div className="flex space-x-4">
-//               <a href="#" className="text-gray-400 hover:text-pink-400 transition-all">Facebook</a>
-//               <a href="#" className="text-gray-400 hover:text-pink-400 transition-all">Twitter</a>
-//               <a href="#" className="text-gray-400 hover:text-pink-400 transition-all">LinkedIn</a>
-//             </div>
-//           </div>
-//         </div>
-//         <div className="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
-//           <p>&copy; 2023 ProFirm GPS. Todos los derechos reservados.</p>
-//         </div>
-//       </div>
-//     </footer>
-//   );
-// };
-
-// export default Footer;
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-
-// const Footer: React.FC = () => {
-//   return (
-//     <footer className="bg-gray-800 text-white py-8">
-//       <div className="container mx-auto px-4">
-//         <div className="flex flex-wrap justify-between">
-//           {/* Sección de Descripción */}
-//           <div className="w-full md:w-1/4 mb-6 md:mb-0">
-//             <h3 className="text-xl font-bold mb-4">ProFirm GPS</h3>
-//             <p className="text-gray-400">Comparando las mejores firmas de trading propietario para ti.</p>
-//           </div>
-
-//           {/* Enlaces Rápidos */}
-//           <div className="w-full md:w-1/4 mb-6 md:mb-0">
-//             <h4 className="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
-//             <ul className="space-y-2">
-//               <li>
-//                 <Link to="/terms" className="text-gray-400 hover:text-pink-400 transition-all">
-//                   Términos de Servicio
-//                 </Link>
-//               </li>
-//               <li>
-//                 <Link to="/privacy" className="text-gray-400 hover:text-pink-400 transition-all">
-//                   Política de Privacidad
-//                 </Link>
-//               </li>
-//               <li>
-//                 <Link to="/faq" className="text-gray-400 hover:text-pink-400 transition-all">
-//                   Preguntas Frecuentes
-//                 </Link>
-//               </li>
-//             </ul>
-//           </div>
-
-//           {/* Sección de Redes Sociales */}
-//           <div className="w-full md:w-1/4 mb-6 md:mb-0">
-//             <h4 className="text-lg font-semibold mb-4">Síguenos</h4>
-//             <div className="flex space-x-4">
-//               <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-400 transition-all">
-//                 Facebook
-//               </a>
-//               <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-400 transition-all">
-//                 Twitter
-//               </a>
-//               <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-400 transition-all">
-//                 LinkedIn
-//               </a>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Pie de página */}
-//         <div className="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
-//           <p>&copy; 2023 ProFirm GPS. Todos los derechos reservados.</p>
-//         </div>
-//       </div>
-//     </footer>
-//   );
-// };
-
-// export default Footer;
-
-
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
 import '../index.css'
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#4c1d95] text-white py-8">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-wrap justify-between">
-          {/* Sección de Descripción */}
-          <div className="w-full md:w-1/4 mb-6 md:mb-0">
-            <h3 className="text-xl font-bold mb-4 text-cyan-400">ProFirm GPS</h3>
-            <p className="text-cyan-200">
-              Comparando las mejores firmas de trading propietario para ti.
+    <footer className="bg-[#1e222d] text-white">
+      {/* Sección Principal */}
+      <div className="w-full max-w-[90rem] mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Sección de la Marca */}
+          <div className="space-y-6">
+            <div className="flex items-center space-x-2">
+              <h3 className="text-2xl font-bold font-poppins bg-gradient-to-r from-[#2962ff] to-[#2979ff] text-transparent bg-clip-text">
+                ProFirm GPS
+              </h3>
+            </div>
+            <p className="text-[#787b86] font-inter leading-relaxed">
+              Tu guía confiable en el mundo del trading propietario. Comparamos y analizamos las mejores firmas para impulsar tu carrera.
             </p>
           </div>
 
           {/* Enlaces Rápidos */}
-          <div className="w-full md:w-1/4 mb-6 md:mb-0">
-            <h4 className="text-lg font-semibold mb-4 text-cyan-400">Enlaces Rápidos</h4>
-            <ul className="space-y-2">
+          <div className="space-y-6">
+            <h4 className="text-lg font-semibold font-poppins text-[#d1d4dc]">
+              Enlaces Rápidos
+            </h4>
+            <ul className="space-y-4">
               <li>
-                <Link to="/terms" className="text-cyan-200 hover:text-cyan-300 transition-all">
+                <Link to="/terms" 
+                      className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
                   Términos de Servicio
                 </Link>
               </li>
               <li>
-                <Link to="/privacy" className="text-cyan-200 hover:text-cyan-300 transition-all">
+                <Link to="/privacy" 
+                      className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
                   Política de Privacidad
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="text-cyan-200 hover:text-cyan-300 transition-all">
+                <Link to="/faq" 
+                      className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
                   Preguntas Frecuentes
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Sección de Redes Sociales */}
-          <div className="w-full md:w-1/4 mb-6 md:mb-0">
-            <h4 className="text-lg font-semibold mb-4 text-cyan-400">Síguenos</h4>
+          {/* Recursos */}
+          <div className="space-y-6">
+            <h4 className="text-lg font-semibold font-poppins text-[#d1d4dc]">
+              Recursos
+            </h4>
+            <ul className="space-y-4">
+              <li>
+                <Link to="/blog" 
+                      className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link to="/guides" 
+                      className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
+                  Guías
+                </Link>
+              </li>
+              <li>
+                <Link to="/articulos" 
+                      className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
+                  Noticias
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contacto y Redes Sociales */}
+          <div className="space-y-6">
+            <h4 className="text-lg font-semibold font-poppins text-[#d1d4dc]">
+              Conecta con Nosotros
+            </h4>
             <div className="flex space-x-4">
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cyan-200 hover:text-cyan-300 transition-all"
-              >
-                Facebook
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+                 className="w-10 h-10 rounded-full bg-[#2a2e39] hover:bg-[#2962ff] 
+                          flex items-center justify-center transition-all duration-300
+                          text-[#787b86] hover:text-white">
+                <FaFacebookF size={18} />
               </a>
-              <a
-                href="https://www.twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cyan-200 hover:text-cyan-300 transition-all"
-              >
-                Twitter
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+                 className="w-10 h-10 rounded-full bg-[#2a2e39] hover:bg-[#2962ff] 
+                          flex items-center justify-center transition-all duration-300
+                          text-[#787b86] hover:text-white">
+                <FaTwitter size={18} />
               </a>
-              <a
-                href="https://www.linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cyan-200 hover:text-cyan-300 transition-all"
-              >
-                LinkedIn
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                 className="w-10 h-10 rounded-full bg-[#2a2e39] hover:bg-[#2962ff] 
+                          flex items-center justify-center transition-all duration-300
+                          text-[#787b86] hover:text-white">
+                <FaLinkedinIn size={18} />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                 className="w-10 h-10 rounded-full bg-[#2a2e39] hover:bg-[#2962ff] 
+                          flex items-center justify-center transition-all duration-300
+                          text-[#787b86] hover:text-white">
+                <FaInstagram size={18} />
               </a>
             </div>
           </div>
         </div>
 
-        {/* Pie de página */}
-        <div className="mt-8 pt-8 border-t border-cyan-800 text-center text-cyan-200">
-          <p>&copy; 2023 ProFirm GPS. Todos los derechos reservados.</p>
+        {/* Línea divisoria */}
+        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#2a2e39] to-transparent my-8"></div>
+
+        {/* Copyright */}
+        <div className="text-center text-[#787b86] font-inter">
+          <p>&copy; {new Date().getFullYear()} ProFirm GPS. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

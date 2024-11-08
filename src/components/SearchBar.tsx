@@ -24,7 +24,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Buscar firmas..."
-        className="w-full p-2 pl-10 rounded border border-gray-300"
+        className="w-full p-2 pl-10 rounded bg-[#1e222d] border border-[#2a2e39] text-[#d1d4dc] placeholder-[#787b86] focus:border-[#2962ff] focus:outline-none"
       />
       <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
         🔍
