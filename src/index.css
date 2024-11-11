@@ -310,3 +310,21 @@ code {
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background-color: rgba(41, 98, 255, 0.3);
 }
+
+@layer components {
+  .prose {
+    @apply text-gray-300;
+  }
+  
+  .prose p {
+    @apply mb-4 text-base leading-relaxed;
+  }
+  
+  .prose a {
+    @apply text-[#2962ff] hover:text-[#2979ff] transition-colors;
+  }
+  
+  .prose h1, .prose h2, .prose h3 {
+    @apply text-white font-bold mb-4;
+  }
+}

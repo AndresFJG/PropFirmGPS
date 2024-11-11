@@ -23,11 +23,11 @@ const BrokerFilter: React.FC<{
       onChange={(e) => {
         if (e.target.value) {
           onFilterClick(e as any, category, e.target.value);
-          e.target.value = ''; // Limpiar input después de seleccionar
+          e.target.value = '';
         }
       }}
-      className="w-full px-4 py-2 rounded-lg text-sm font-medium bg-[#312354] text-gray-300 
-                 border border-[#4e3a77] focus:outline-none focus:border-[#04a8c2]"
+      className="w-full px-4 py-2 rounded-lg text-sm font-medium bg-[#1e222d] text-gray-300 
+                 border border-[#2a2e39] focus:outline-none focus:border-[#2962ff]"
     />
     <datalist id="brokers-list">
       {options.map((broker) => (
@@ -39,7 +39,7 @@ const BrokerFilter: React.FC<{
       {selectedValues.map((broker) => (
         <span
           key={broker}
-          className="inline-flex items-center px-3 py-2 rounded-lg text-sm bg-gradient-to-r from-[#04a8c2] to-[#67d6e9] text-white"
+          className="inline-flex items-center px-3 py-2 rounded-lg text-sm bg-[#2962ff] text-white"
         >
           {broker}
           <FaTimes
@@ -114,9 +114,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
         px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
         flex items-center justify-between gap-2 min-w-[100px]
         ${isSelected 
-          ? 'bg-gradient-to-r from-[#04a8c2] to-[#67d6e9] text-white shadow-lg shadow-[#04a8c2]/20' 
-          : 'bg-[#312354] text-gray-300 hover:bg-[#4e3a77] hover:shadow-md'
-        } border border-[#4e3a77]
+          ? 'bg-[#2962ff] text-white shadow-lg shadow-[#2962ff]/20' 
+          : 'bg-[#1e222d] text-gray-300 hover:bg-[#2a2e39] hover:shadow-md'
+        } border border-[#2a2e39]
       `}
     >
       <span>{value}</span>
@@ -150,14 +150,14 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
       <motion.div 
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-6 p-4 bg-[#312354] rounded-lg border border-[#4e3a77]"
+        className="mb-6 p-4 bg-[#1e222d] rounded-lg border border-[#2a2e39]"
       >
         <h3 className="text-sm font-medium text-gray-300 mb-3">Filtros Activos</h3>
         <div className="flex flex-wrap gap-2">
           {activeFilters.map(({ category, value }) => (
             <span
               key={`${category}-${value}`}
-              className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-[#04a8c2] text-white"
+              className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-[#2962ff] text-white"
             >
               <span className="mr-2 text-xs text-gray-200">{category}:</span>
               {value}
@@ -237,13 +237,12 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
 
             {Object.values(localFilters).some(arr => arr.length > 0) && (
               <motion.div 
-                className="flex justify-end mt-6 pt-4 border-t border-purple-500/10"
+                className="flex justify-end mt-6 pt-4 border-t border-[#2a2e39]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
                 <button
                   onClick={(e) => {
-                    // Solo aquí permitimos la actualización de la página
                     setLocalFilters({
                       accountSizes: [],
                       steps: [],
@@ -263,8 +262,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
                       tradingDays: []
                     });
                   }}
-                  className="px-6 py-2 bg-[#312354] text-white rounded-lg hover:bg-[#4e3a77] 
-                    transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl"
+                  className="px-6 py-2 bg-[#1e222d] text-white rounded-lg hover:bg-[#2a2e39] 
+                    transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl
+                    border border-[#2a2e39]"
                 >
                   <FaTimes size={12} />
                   <span>Limpiar filtros</span>

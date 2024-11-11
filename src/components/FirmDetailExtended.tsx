@@ -30,11 +30,13 @@ interface AccountData {
 }
 
 const InfoItem: React.FC<{ label: string; value: string }> = ({ label, value }) => (
-  <div className="bg-purple-900/20 p-5 rounded-xl flex items-center justify-between gap-4 hover:bg-purple-900/30 transition-all duration-200 border border-purple-700/20">
-    <span className="text-purple-100 text-sm font-medium uppercase tracking-wider w-2/5">
+  <div className="bg-[#1e222d] p-5 rounded-xl flex items-center justify-between gap-4 
+                  hover:bg-[#2962ff]/5 transition-all duration-200 
+                  border border-[#2a2e39] hover:border-[#2962ff]/30">
+    <span className="text-[#787b86] text-sm font-medium uppercase tracking-wider w-2/5 font-inter">
       {label}
     </span>
-    <span className="text-white text-sm font-medium w-3/5 text-right break-words">
+    <span className="text-[#d1d4dc] text-sm font-medium w-3/5 text-right break-words font-inter">
       {value || 'No disponible'}
     </span>
   </div>
@@ -42,7 +44,8 @@ const InfoItem: React.FC<{ label: string; value: string }> = ({ label, value }) 
 
 const InfoSection: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
   <div className="mb-4">
-    <h3 className="text-xl font-semibold text-white mb-3 pb-2 border-b border-purple-700/50">
+    <h3 className="text-xl font-semibold text-[#d1d4dc] mb-3 pb-2 
+                   border-b border-[#2a2e39] font-poppins">
       {title}
     </h3>
     <div className="space-y-3">{children}</div>
@@ -91,26 +94,35 @@ const FirmDetailExtended: React.FC = () => {
   console.log('Estado actual de accounts:', accounts);
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
-      <div className="grid grid-cols-1 lg:grid-cols-10 gap-8">
-        {/* Carta de información */}
-        <div className="lg:col-span-4 bg-purple-800/30 rounded-2xl p-6 backdrop-blur-sm shadow-xl shadow-purple-900/20 border border-purple-700/20 h-fit">
-          {/* Encabezado */}
-          <div className="mb-4">
-            <h1 className="text-2xl font-bold text-white mb-4">{firmData['Profirm Name']}</h1>
-            <div className="bg-purple-900/20 p-4 rounded-lg flex items-center justify-between">
-              <span className="text-gray-300 text-sm font-medium uppercase tracking-wide">
+    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+        {/* Carta de información - Ajustada para mejor visualización */}
+        <div className="xl:col-span-4 bg-gradient-to-br from-[#1e222d] via-[#1e222d] to-[#2962ff]/5 
+                      rounded-2xl p-6 shadow-xl border border-[#2a2e39] 
+                      hover:border-[#2962ff]/30 transition-all duration-300
+                      hover:shadow-[#2962ff]/10 h-fit">
+          {/* Header con mejor espaciado */}
+          <div className="mb-6">
+            <h1 className="text-2xl font-bold text-[#d1d4dc] mb-4 font-poppins">
+              {firmData['Profirm Name']}
+            </h1>
+            <div className="bg-[#131722] p-4 rounded-lg flex items-center justify-between
+                          border border-[#2a2e39] hover:border-[#2962ff]/30
+                          transition-all duration-300">
+              <span className="text-[#787b86] text-sm font-medium uppercase tracking-wide font-inter">
                 Valoración
               </span>
               <div className="flex items-center gap-2">
-                <FaStar className="text-yellow-400 text-xl" />
-                <span className="text-white font-small text-lg">{firmData['TRUST PILOT']}</span>
+                <FaStar className="text-[#2962ff] text-xl" />
+                <span className="text-[#d1d4dc] font-medium text-lg font-inter">
+                  {firmData['TRUST PILOT']}
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Contenido principal */}
-          <div className="space-y-4">
+          {/* Contenido principal con mejor espaciado */}
+          <div className="space-y-6">
             <InfoSection title="Información General">
               <InfoItem label="CEO" value={firmData['CEO']} />
               <InfoItem label="Establecido" value={firmData['ESTABLISHED']} />
@@ -142,53 +154,59 @@ const FirmDetailExtended: React.FC = () => {
           </div>
         </div>
 
-        {/* Tabla de cuentas - ajustada a 6 columnas */}
-        <div className="lg:col-span-6 bg-[#1e222d] rounded-2xl p-8 backdrop-blur-sm shadow-xl border border-[#2a2e39]/30">
-          <h2 className="text-3xl font-bold text-white mb-8 pb-2 border-b border-purple-700/50">
+        {/* Tabla de cuentas - Ajustada para mejor visualización */}
+        <div className="xl:col-span-8 bg-gradient-to-br from-[#1e222d] via-[#1e222d] to-[#2962ff]/5 
+                      rounded-2xl p-6 shadow-xl border border-[#2a2e39]
+                      hover:border-[#2962ff]/30 transition-all duration-300
+                      hover:shadow-[#2962ff]/10">
+          <h2 className="text-2xl font-bold text-[#d1d4dc] mb-6 pb-2 
+                       border-b border-[#2a2e39] font-poppins">
             Cuentas Disponibles
           </h2>
           <div className="w-full">
-            <table className="w-full text-[#d1d4dc] border-spacing-y-4 border-separate">
+            <table className="w-full text-[#d1d4dc] border-spacing-y-3 border-separate">
               <thead>
                 <tr>
-                  {/* Encabezados con fondo más llamativo y mejor espaciado */}
-                  {['Firma', 'Tamaño', 'Precio', 'Split', 'Objetivo', 'P.Diaria', 'P.Total'].map((header) => (
-                    <th key={header} className="bg-[#131722] first:rounded-l-lg last:rounded-r-lg py-5 px-6">
-                      <span className="text-base font-semibold uppercase tracking-wider text-[#d1d4dc]">
-                        {header}
+                  {[
+                    { key: 'size', label: 'Tamaño', width: 'w-[20%]' },
+                    { key: 'price', label: 'Precio', width: 'w-[15%]' },
+                    { key: 'split', label: 'Split', width: 'w-[10%]' },
+                    { key: 'target', label: 'Objetivo', width: 'w-[15%]' },
+                    { key: 'daily', label: 'P.Diaria', width: 'w-[20%]' },
+                    { key: 'total', label: 'P.Total', width: 'w-[20%]' }
+                  ].map((header) => (
+                    <th key={header.key} 
+                        className={`${header.width} bg-[#131722] first:rounded-l-lg last:rounded-r-lg 
+                                  py-4 px-4 text-left border border-[#2a2e39]`}>
+                      <span className="text-sm font-semibold uppercase tracking-wider text-[#787b86] font-inter">
+                        {header.label}
                       </span>
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="space-y-3">
+              <tbody className="space-y-2">
                 {accounts.map((account, index) => (
-                  <tr 
-                    key={index}
-                    className="transition-all duration-200"
-                  >
-                    {/* Celdas con mejor diseño y hover */}
+                  <tr key={index} className="transition-all duration-200">
                     {[
-                      account['FIRM'],
-                      account['ACCOUNT SIZE'],
-                      account['PRICE'],
-                      account['PROFIT SPLIT'],
-                      account['PROFIT TARGET'],
-                      account['MAX. DAILY LOSS'],
-                      account['MAX. TOTAL DRAWDOWN']
-                    ].map((value, i) => (
-                      <td 
-                        key={i} 
-                        className={`
-                          bg-purple-900/20 hover:bg-purple-900/30 
-                          transition-colors duration-200
-                          py-4 px-6 text-base font-medium
-                          ${i === 0 ? 'rounded-l-lg' : ''}
-                          ${i === 6 ? 'rounded-r-lg' : ''}
-                          ${typeof value === 'string' && value.includes('$') ? 'text-green-400' : 'text-white'}
-                        `}
-                      >
-                        {value}
+                      { value: account['ACCOUNT SIZE'], align: 'text-left' },
+                      { value: account['PRICE'], align: 'text-right' },
+                      { value: account['PROFIT SPLIT'], align: 'text-center' },
+                      { value: account['PROFIT TARGET'], align: 'right' },
+                      { value: account['MAX. DAILY LOSS'], align: 'right' },
+                      { value: account['MAX. TOTAL DRAWDOWN'], align: 'right' }
+                    ].map((cell, i) => (
+                      <td key={i} 
+                          className={`
+                            bg-[#1e222d] hover:bg-[#2962ff]/5 
+                            transition-colors duration-200
+                            py-4 px-4 text-sm font-medium font-inter ${cell.align}
+                            border border-[#2a2e39] hover:border-[#2962ff]/30
+                            ${i === 0 ? 'rounded-l-lg' : ''}
+                            ${i === 5 ? 'rounded-r-lg' : ''}
+                            ${typeof cell.value === 'string' && cell.value.includes('$') ? 'text-[#2962ff]' : 'text-[#d1d4dc]'}
+                          `}>
+                        {cell.value}
                       </td>
                     ))}
                   </tr>

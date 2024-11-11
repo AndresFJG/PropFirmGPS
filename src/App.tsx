@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import FilterPanel from './components/FilterPanel';
@@ -14,6 +14,11 @@ import ComparisonDetail from './components/ComparisonDetail';
 import TopFirmStrip from './components/TopFirmStrip';
 import FirmDetail from './components/FirmDetail';
 import FirmDetailExtended from './components/FirmDetailExtended';
+import TradingTools from './components/TradingTools';
+import PositionSizeCalculator from './components/tools/PositionSizeCalculator';
+import TradingViewWidget from './components/tools/TradingViewWidget';
+import RiskManagement from './components/tools/RiskManagement';
+import ProfitCalculator from './components/tools/ProfitCalculator';
 import Papa from 'papaparse';
 import { Firm, Filters } from './backend/types';
 import './index.css'
@@ -135,6 +140,13 @@ const App: React.FC = () => {
             <Route path="/top-firms" element={<TopFirmStrip />} />
             <Route path="/firma/:slug" element={<FirmDetail />} />
             <Route path="/firm/:slug/details" element={<FirmDetailExtended />} />
+            <Route path="/herramientas" element={<TradingTools />}>
+              <Route index element={<Navigate to="/herramientas/calculadoras" replace />} />
+              <Route path="calculadoras" element={<PositionSizeCalculator />} />
+              <Route path="analisis" element={<TradingViewWidget />} />
+              <Route path="riesgo" element={<RiskManagement />} />
+              <Route path="beneficios" element={<ProfitCalculator />} />
+            </Route>
           </Routes>
         </main>
         <Footer />

@@ -2,23 +2,10 @@ import React, { useState } from 'react';
 import { useArticles } from '../hooks/useArticles';
 import { FaChevronDown } from 'react-icons/fa';
 import MarketAnalysisModal from './MarketAnalysisModal';
+import ArticleSummaryModal from './ArticleSummaryModal';
+import { Article } from '../types/Article';
 
 // Interface
-interface Article {
-  id: string;
-  title: string;
-  description: string;
-  mainImage: string;
-  firmLogo: string;
-  firmName: string;
-  date: string;
-  readTime: string;
-  links: {
-    website: string;
-    review: string;
-  };
-}
-
 interface MarketSentimentProps {
   symbol: string;
 }
@@ -102,7 +89,27 @@ const getMarketSymbol = (article: Article): string => {
 const ArticlesPage: React.FC = () => {
   const { articles, loading, error } = useArticles();
   const [visibleArticles, setVisibleArticles] = useState(5);
-  const [selectedArticle, setSelectedArticle] = useState<any | null>(null);
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const [showArticleSummary, setShowArticleSummary] = useState(false);
+  const [showMarketAnalysis, setShowMarketAnalysis] = useState(false);
+
+  const handleArticleClick = (article: Article) => {
+    const articleWithUrl = {
+      ...article,
+      url: article.links.website
+    };
+    setSelectedArticle(articleWithUrl);
+    setShowArticleSummary(true);
+  };
+
+  const handleMarketAnalysisClick = (article: Article) => {
+    const articleWithUrl = {
+      ...article,
+      url: article.links.website
+    };
+    setSelectedArticle(articleWithUrl);
+    setShowMarketAnalysis(true);
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-[#131722]">
@@ -201,21 +208,23 @@ const ArticlesPage: React.FC = () => {
 
                 <div className="space-y-3 mt-auto">
                   <a
-                    href={article.links.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleArticleClick(article);
+                    }}
                     className="block w-full py-2.5 px-4 
                              bg-gradient-to-r from-[#2962ff] to-[#2979ff]
                              text-white text-center rounded-lg 
                              hover:from-[#2979ff] hover:to-[#2962ff]
                              transition-all duration-300 transform hover:-translate-y-0.5 
-                             shadow-lg hover:shadow-[#2962ff]/25 text-sm font-medium font-inter"
+                             shadow-lg hover:shadow-[#2962ff]/25 text-sm font-medium font-inter
+                             cursor-pointer"
                   >
                     Leer Artículo Completo
                   </a>
                   
                   <button
-                    onClick={() => setSelectedArticle(article)}
+                    onClick={() => handleMarketAnalysisClick(article)}
                     className="block w-full py-2.5 px-4 
                              bg-gradient-to-r from-[#1e222d] to-[#2a2e39]
                              text-[#d1d4dc] text-center rounded-lg 
@@ -250,11 +259,24 @@ const ArticlesPage: React.FC = () => {
         </div>
       )}
 
-      {/* Modal de Análisis */}
-      {selectedArticle && (
+      {/* Modales */}
+      {showArticleSummary && selectedArticle && (
+        <ArticleSummaryModal
+          article={selectedArticle}
+          onClose={() => {
+            setShowArticleSummary(false);
+            setSelectedArticle(null);
+          }}
+        />
+      )}
+
+      {showMarketAnalysis && selectedArticle && (
         <MarketAnalysisModal 
           article={selectedArticle} 
-          onClose={() => setSelectedArticle(null)} 
+          onClose={() => {
+            setShowMarketAnalysis(false);
+            setSelectedArticle(null);
+          }} 
         />
       )}
     </div>
