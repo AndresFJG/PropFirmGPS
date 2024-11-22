@@ -188,18 +188,18 @@ const TopFirmStrip: React.FC = () => {
         maxDrawdown: '5%',
         profitTarget: {
           phase1: '8%',
-          funded: '5%'
+          funded: '4%'
         },
-        scaling: 'Up to $1,000,000',
+        scaling: 'Up to $500,000',
         payouts: 'Weekly',
         platforms: ['MT4', 'MT5'],
         instruments: ['Forex', 'Indices', 'Commodities'],
         features: [
-          'Two-step evaluation',
-          'Trading community',
+          'Flexible trading conditions',
+          'No time limits',
+          'Trading tools provided',
           'Educational resources',
-          'Personal manager',
-          'Flexible trading conditions'
+          'Professional support'
         ]
       }
     },
@@ -1355,7 +1355,6 @@ const TopFirmStrip: React.FC = () => {
   ];
 
   const { reviews, loading } = useReviews();
-
   const [selectedFirm, setSelectedFirm] = useState<TopFirm | null>(null);
 
   return (
@@ -1415,9 +1414,8 @@ const TopFirmStrip: React.FC = () => {
                   </p>
                 </div>
               </div>
-
-              {/* Botones */}
-              <div className="md:w-1/4 flex flex-col space-y-2">
+                {/* Botones */}
+                <div className="md:w-1/4 flex flex-col space-y-2">
                 <a
                   href={firm.websiteUrl}
                   target="_blank"
@@ -1444,7 +1442,11 @@ const TopFirmStrip: React.FC = () => {
                   <FaInfoCircle className="ml-2" />
                 </button>
               </div>
+
             </div>
+
+            {/* Barra de Progreso */}
+            <div className="h-1 bg-gradient-to-r from-[#2962ff] via-[#2979ff] to-[#2962ff]" />
           </div>
         ))}
       </div>
@@ -1459,39 +1461,28 @@ const TopFirmStrip: React.FC = () => {
             {/* Header */}
             <div className="relative bg-[#1e222d] p-6 border-b border-[#2a2e39]">
               <div className="flex items-center space-x-6">
-                <div className="bg-[#131722] p-3 rounded-xl border border-[#2a2e39]">
                 <img 
-              src={require(`../logos/${selectedFirm.logo}`)} // Asegúrate de que la ruta sea correcta
-              alt={selectedFirm.name} 
-              className="w-20 h-20 object-contain"
-            />
-                </div>
-                <div>
-                  <h3 className="text-3xl font-bold text-[#d1d4dc] mb-2 font-poppins">
-                    {selectedFirm.name}
-                  </h3>
-                  <div className="flex items-center space-x-4">
-                    <div className="flex items-center bg-[#2962ff]/10 px-3 py-1 rounded-full">
-                      <FaStar className="text-[#2962ff]" />
-                      <span className="text-[#d1d4dc] ml-2 font-semibold">
-                        {selectedFirm.rating}
-                      </span>
-                    </div>
-                    <span className="text-[#787b86]">
-                      {selectedFirm.ratingCount.toLocaleString()} reviews
+                  src={require(`../logos/${selectedFirm.logo}`)} // Asegúrate de que la ruta sea correcta
+                  alt={selectedFirm.name} 
+                  className="w-20 h-20 object-contain"
+                />
+              </div>
+              <div>
+                <h3 className="text-3xl font-bold text-[#d1d4dc] mb-2 font-poppins">
+                  {selectedFirm.name}
+                </h3>
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center bg-[#2962ff]/10 px-3 py-1 rounded-full">
+                    <FaStar className="text-[#2962ff]" />
+                    <span className="text-[#d1d4dc] ml-2 font-semibold">
+                      {selectedFirm.rating}
                     </span>
                   </div>
+                  <span className="text-[#787b86]">
+                    {selectedFirm.ratingCount.toLocaleString()} reviews
+                  </span>
                 </div>
               </div>
-              <button 
-                onClick={() => setSelectedFirm(null)}
-                className="absolute top-6 right-6 text-[#787b86] 
-                         hover:text-[#d1d4dc] bg-[#2a2e39]/50 
-                         hover:bg-[#2a2e39] p-2 rounded-full 
-                         transition-all duration-200"
-              >
-                <FaTimes size={20} />
-              </button>
             </div>
 
             {/* Contenido Principal */}
