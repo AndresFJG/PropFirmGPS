@@ -1,0 +1,98 @@
+@media (max-width: 640px) {
+  .text-xl {
+    font-size: 1rem; /* Ajustar tamaño de fuente para pantallas pequeñas */
+  }
+  .text-base {
+    font-size: 0.75rem; /* Cambiar a 0.75rem para un mejor ajuste en pantallas pequeñas */
+  }
+  .card {
+    padding: 0.5rem; /* Reducir padding en tarjetas para pantallas pequeñas */
+    min-height: 200px; /* Asegurar que las tarjetas tengan una altura mínima */
+    overflow: hidden; /* Evitar que el contenido se desborde */
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .text-xl {
+    font-size: 1.25rem; /* Ajustar tamaño de fuente para pantallas medianas */
+  }
+  .text-base {
+    font-size: 0.875rem; /* Ajustar tamaño de fuente para pantallas medianas */
+  }
+  .card {
+    padding: 0.75rem; /* Ajustar padding en tarjetas para pantallas medianas */
+    min-height: 240px; /* Aumentar la altura mínima para dar más espacio a la descripción */
+    overflow: visible; /* Permitir que el contenido se muestre completamente */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .text-xl {
+    font-size: 1.5rem; /* Ajustar tamaño de fuente para pantallas grandes (tablet) */
+  }
+  .text-base {
+    font-size: 1rem; /* Ajustar tamaño de fuente para pantallas grandes (tablet) */
+  }
+  .card {
+    padding: 1rem; /* Ajustar padding en tarjetas para pantallas grandes */
+    min-height: 240px; /* Aumentar la altura mínima para dar más espacio a la descripción */
+    overflow: visible; /* Permitir que el contenido se muestre completamente */
+  }
+}
+
+@media (min-width: 1025px) {
+  .text-xl {
+    font-size: 1.5rem; /* Ajustar tamaño de fuente para pantallas grandes (desktop) */
+  }
+  .text-base {
+    font-size: 1rem; /* Ajustar tamaño de fuente para pantallas grandes (desktop) */
+  }
+}
+
+/* Ajustes adicionales para el espaciado */
+.card {
+  text-overflow: ellipsis; /* Agregar puntos suspensivos si el texto es demasiado largo */
+  white-space: normal; /* Permitir que el texto se divida en varias líneas */
+  display: flex; /* Usar flexbox para alinear el contenido */
+  flex-direction: column; /* Alinear el contenido en columna */
+  justify-content: space-between; /* Espaciar el contenido */
+  overflow: visible; /* Permitir que el contenido se muestre completamente */
+}
+
+/* Asegurarse de que el texto no se desborde */
+.card p {
+  margin: 0; /* Eliminar márgenes para evitar desbordamiento */
+  flex-grow: 1; /* Permitir que el párrafo crezca para ocupar el espacio disponible */
+  overflow: visible; /* Permitir que el texto se muestre completamente */
+}
+
+/* Ajustes para el diseño de columnas */
+@media (min-width: 641px) and (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas en pantallas medianas */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr); /* Tres columnas en pantallas grandes */
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 0.5s; /* Asegúrate de que esto coincida con el valor en el componente */
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out; /* Asegúrate de que esto coincida con el valor en el componente */
+}

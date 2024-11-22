@@ -1,0 +1,73 @@
+{
+  "name": "profirm-comparison-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/lodash": "^4.17.13",
+    "@types/node": "^16.18.108",
+    "@types/react": "^18.3.8",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "axios": "^1.6.2",
+    "cheerio": "^1.0.0-rc.12",
+    "csv-parser": "^3.0.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "framer-motion": "^11.11.11",
+    "i18next": "^23.16.4",
+    "jest": "^27.5.1",
+    "lodash": "^4.17.21",
+    "mysql2": "^3.11.3",
+    "papaparse": "^5.4.1",
+    "postcss": "^8.4.47",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-error-boundary": "^4.1.2",
+    "react-helmet-async": "^2.0.5",
+    "react-i18next": "^15.1.0",
+    "react-icons": "^5.3.0",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.26.2",
+    "react-scripts": "5.0.1",
+    "tailwind-scrollbar": "^3.1.0",
+    "tailwindcss": "^3.4.12",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/cheerio": "^0.22.35",
+    "@types/knex": "^0.15.2",
+    "@types/papaparse": "^5.3.15",
+    "@types/react-icons": "^2.2.7"
+  }
+}
