@@ -104,7 +104,6 @@ export interface Filters {
   instruments: string[];
   brokers: string[];
   maxDrawdown: string[];
-  tradingDays: string[];
 }
 
 export interface FilterPanelProps {

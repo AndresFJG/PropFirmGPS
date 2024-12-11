@@ -5,16 +5,13 @@ import '../index.css';
 
 const Footer: React.FC = () => {
   const openTermsAndPrivacy = () => {
-    const newWindow = window.open('/terms-and-privacy', '_blank');
-    if (newWindow) newWindow.focus();
+    window.location.href = '/terms-and-privacy';
   };
   const openPrivacyPolicyFooter = () => {
-    const newWindow = window.open('/privacy-policy', '_blank');
-    if (newWindow) newWindow.focus();
+    window.location.href = '/privacy-policy';
   };
   const openFAQ = () => {
-    const newWindow = window.open('/faq', '_blank');
-    if (newWindow) newWindow.focus();
+    window.location.href = '/faq';
   };
 
   return (
@@ -26,7 +23,7 @@ const Footer: React.FC = () => {
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
               <h3 className="text-2xl font-bold font-poppins bg-gradient-to-r from-[#2962ff] to-[#2979ff] text-transparent bg-clip-text">
-                ProFirm GPS
+                PropFirm GPS
               </h3>
             </div>
             <p className="text-[#787b86] font-inter leading-relaxed">
@@ -41,25 +38,25 @@ const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-4">
               <li>
-                <button 
-                  onClick={openTermsAndPrivacy} 
+                <Link 
+                  to="/terms-and-privacy" 
                   className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
                   Términos de Servicio
-                </button>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={openPrivacyPolicyFooter} 
+                <Link 
+                  to="/privacy-policy" 
                   className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
                   Política de Privacidad
-                </button>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={openFAQ} 
+                <Link 
+                  to="/faq" 
                   className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
                   Preguntas Frecuentes
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -130,7 +127,7 @@ const Footer: React.FC = () => {
 
         {/* Copyright */}
         <div className="text-center text-[#787b86] font-inter">
-          <p>&copy; {new Date().getFullYear()} ProFirm GPS. Todos los derechos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} PropFirm GPS. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

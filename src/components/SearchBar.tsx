@@ -11,15 +11,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   // Usar debounce para evitar llamadas excesivas a onSearch
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (searchTerm) {
-        onSearch(searchTerm);
-      }
+      onSearch(searchTerm);
     }, 300);
 
     return () => clearTimeout(timeoutId);
   }, [searchTerm, onSearch]);
-
- 
 
   return (
     <div className="flex justify-end items-center space-x-2">

@@ -72,7 +72,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
       .filter(Boolean)
     )),
     maxDrawdown: ['5', '10', '12'],
-    tradingDays: ['5', '30', '60']
+    // Eliminar el filtro de días de trading
+    // tradingDays: ['5', '30', '60']
   };
 
   const handleFilterClick = (e: React.MouseEvent, category: keyof Filters, value: string) => {
@@ -126,7 +127,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
     instruments: "Instrumentos",
     brokers: "Brokers",
     maxDrawdown: "Drawdown Máximo",
-    tradingDays: "Días de Trading"
+    // Eliminar la categoría de días de trading
+    // tradingDays: "Días de Trading"
   };
 
   // Mostrar filtros activos
@@ -245,7 +247,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
                       instruments: [],
                       brokers: [],
                       maxDrawdown: [],
-                      tradingDays: []
+                      // Eliminar el filtro de días de trading
+                      // tradingDays: []
                     });
                     onFilterChange({
                       accountSizes: [],
@@ -254,7 +257,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
                       instruments: [],
                       brokers: [],
                       maxDrawdown: [],
-                      tradingDays: []
+                      // Eliminar el filtro de días de trading
+                      // tradingDays: []
                     });
                   }}
                   className="px-6 py-2 bg-[#1e222d] text-white rounded-lg hover:bg-[#2a2e39] 

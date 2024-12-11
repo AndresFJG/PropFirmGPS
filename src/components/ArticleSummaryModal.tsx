@@ -8,20 +8,6 @@ interface ArticleSummaryModalProps {
 }
 
 const ArticleSummaryModal: React.FC<ArticleSummaryModalProps> = ({ article, onClose }) => {
-  // Crear un resumen estructurado
-  const summary = `
-    ${article.description}
-
-    Este artículo de ${article.firmName} proporciona un análisis detallado sobre:
-
-    • Perspectivas del mercado actual
-    • Análisis técnico y fundamental
-    • Recomendaciones de inversión
-    • Tendencias del mercado
-    
-    La información completa está disponible en la plataforma.
-  `;
-
   const handleShare = async () => {
     if (navigator.share) {
       try {
@@ -38,7 +24,7 @@ const ArticleSummaryModal: React.FC<ArticleSummaryModalProps> = ({ article, onCl
 
   return (
     <div className="fixed inset-0 z-50 bg-[#131722]/95 flex items-center justify-center p-4 backdrop-blur-sm">
-      <div className="bg-[#1e222d] rounded-xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-xl">
+      <div className="bg-[#1e222d] rounded-xl w-full max-w-sm md:max-w-4xl max-h-[90vh] overflow-hidden shadow-xl">
         {/* Header con imagen */}
         <div className="relative h-48 md:h-64">
           <img
@@ -53,14 +39,14 @@ const ArticleSummaryModal: React.FC<ArticleSummaryModalProps> = ({ article, onCl
             <button
               onClick={handleShare}
               className="p-2 rounded-lg bg-[#131722]/50 text-white hover:bg-[#2962ff]/80 
-                       transition-all duration-200"
+                       transition-all duration-200 w-10 h-10 flex items-center justify-center"
             >
               <FaShare className="w-5 h-5" />
             </button>
             <button
               onClick={onClose}
               className="p-2 rounded-lg bg-[#131722]/50 text-white hover:bg-red-500/80 
-                       transition-all duration-200"
+                       transition-all duration-200 w-10 h-10 flex items-center justify-center"
             >
               <FaTimes className="w-5 h-5" />
             </button>
@@ -92,20 +78,20 @@ const ArticleSummaryModal: React.FC<ArticleSummaryModalProps> = ({ article, onCl
         </div>
 
         {/* Título y etiquetas */}
-        <div className="px-6 py-4 border-b border-[#2a2e39]">
-          <h2 className="text-xl font-bold text-white mb-3">{article.title}</h2>
+        <div className="px-4 py-4 border-b border-[#2a2e39]">
+          <h2 className="text-lg md:text-xl font-bold text-white mb-3">{article.title}</h2>
           <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1 rounded-full text-sm bg-[#2962ff]/10 text-[#2962ff]">
+            <span className="px-3 py-1 rounded-full text-xs md:text-sm bg-[#2962ff]/10 text-[#2962ff]">
               Análisis de Mercado
             </span>
-            <span className="px-3 py-1 rounded-full text-sm bg-[#131722] text-gray-300">
+            <span className="px-3 py-1 rounded-full text-xs md:text-sm bg-[#131722] text-gray-300">
               Resumen
             </span>
           </div>
         </div>
 
         {/* Contenido del resumen */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-24rem)]">
+        <div className="p-4 md:p-6 overflow-y-auto max-h-[calc(90vh-24rem)]">
           <div className="space-y-6">
             {/* Descripción principal */}
             <div className="text-gray-300 leading-relaxed">

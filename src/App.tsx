@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
@@ -9,7 +9,6 @@ import SearchBar from './components/SearchBar';
 import InfoCards from './components/InfoCards';
 import Reviews from './components/Reviews';
 import ArticlesPage from './components/ArticlesPage';
-
 import TopFirmStrip from './components/TopFirmStrip';
 import FirmDetail from './components/FirmDetail';
 import FirmDetailExtended from './components/FirmDetailExtended';
@@ -22,10 +21,11 @@ import TermsAndPrivacy from './components/TermsAndPrivacy';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Papa from 'papaparse';
 import { Firm, Filters } from './backend/types';
-import './index.css'
+import './index.css';
 import FAQ from './components/FAQ';
 import ResourceCenter from './components/ResourceCenter';
 import Blog from './components/Blog';
+import WhatsAppButton from './components/WhatsAppButton';
 
 const App: React.FC = () => {
   const [allFirms, setAllFirms] = useState<Firm[]>([]);
@@ -37,9 +37,10 @@ const App: React.FC = () => {
     instruments: [],
     brokers: [],
     maxDrawdown: [],
-    tradingDays: []
   });
   const [selectedCurrency, setSelectedCurrency] = useState<string>('EURUSD');
+  const [searchTerm, setSearchTerm] = useState<string>(''); // Estado para el término de búsqueda
+  const tableRef = useRef<HTMLDivElement | null>(null); // Crear referencia para la tabla
 
   // Cargar datos iniciales
   useEffect(() => {
@@ -53,7 +54,6 @@ const App: React.FC = () => {
           setAllFirms(result.data as Firm[]);
           setDisplayedFirms(result.data as Firm[]); // Inicializa displayedFirms
         }
-        
       },
       error: (error) => {
         console.error('Error al leer el CSV:', error);
@@ -83,7 +83,7 @@ const App: React.FC = () => {
       // Filtro de plataformas
       const matchesPlatform = filters.platforms.length === 0 || 
         filters.platforms.some(platform => 
-          String(firm['Trading Platforms']|| '').toLowerCase().includes(platform.toLowerCase())
+          String(firm['Trading Platforms'] || '').toLowerCase().includes(platform.toLowerCase())
         );
 
       // Filtro de instrumentos
@@ -105,26 +105,44 @@ const App: React.FC = () => {
           return firmDrawdown === drawdown.replace('%', '');
         });
 
-      // Filtro de días de trading
-      const matchesTradingDays = filters.tradingDays.length === 0 || 
-        filters.tradingDays.some(days => 
-          String(firm['MINIMUN TRADING DAYS']) === days
-        );
-
       return matchesAccountSize && matchesSteps && matchesPlatform && 
-             matchesInstruments && matchesBroker && matchesDrawdown && 
-             matchesTradingDays;
+             matchesInstruments && matchesBroker && matchesDrawdown;
     });
   }, [allFirms, filters]);
 
   const handleSearch = (term: string) => {
-    const filteredFirms = allFirms.filter(firm => 
-      firm['FIRM'] && String(firm['FIRM']).toLowerCase().includes(term.toLowerCase())
-    );
-    setDisplayedFirms(filteredFirms);
+    setSearchTerm(term); // Actualiza el término de búsqueda
+
+    if (term.trim() === '') {
+      // Si el término de búsqueda está vacío, restablecer a todas las firmas
+      setDisplayedFirms(displayedFirmsFiltered);
+      return;
+    }
+
+    const filteredFirms = displayedFirmsFiltered.filter(firm => {
+      const firmName = firm['FIRM'] || '';
+      return firmName.toString().toLowerCase().includes(term.toLowerCase());
+    });
+
+    // Ordenar las firmas filtradas por la primera letra del término de búsqueda
+    const sortedFirms = filteredFirms.sort((a, b) => {
+      const aName = a['FIRM'] || '';
+      const bName = b['FIRM'] || '';
+      const firstLetter = term.charAt(0).toLowerCase();
+
+      // Comparar si la primera letra coincide
+      const aStartsWith = aName.toString().toLowerCase().startsWith(firstLetter);
+      const bStartsWith = bName.toString().toLowerCase().startsWith(firstLetter);
+
+      if (aStartsWith && !bStartsWith) return -1;
+      if (!aStartsWith && bStartsWith) return 1;
+      return aName.toString().localeCompare(bName.toString()); // Ordenar alfabéticamente si ambos coinciden
+    });
+
+    setDisplayedFirms(sortedFirms);
   };
 
-   // Agregar console.log para debugging
+  // Agregar console.log para debugging
   useEffect(() => {
     console.log('Filtros actuales:', filters);
     console.log('Firms filtradas:', displayedFirmsFiltered);
@@ -133,6 +151,13 @@ const App: React.FC = () => {
   const handleFilterChange = (newFilters: Filters) => {
     console.log('Aplicando nuevos filtros:', newFilters); // Debug
     setFilters(newFilters);
+    // Actualizar displayedFirms solo si el buscador está vacío
+    if (searchTerm.trim() === '') {
+      setDisplayedFirms(displayedFirmsFiltered);
+    } else {
+      // Si hay un término de búsqueda, filtrar según el término de búsqueda
+      handleSearch(searchTerm);
+    }
   };
 
   useEffect(() => {
@@ -155,10 +180,10 @@ const App: React.FC = () => {
                 onFilterChange={handleFilterChange}
                 currentFilters={filters}
                 onSearch={handleSearch}
+                tableRef={tableRef} // Pasar la referencia a la tabla
               />
             } />
             <Route path="/articulos/*" element={<ArticlesPage />} />
-
             <Route path="/top-firms" element={<TopFirmStrip />} />
             <Route path="/firma/:slug" element={<FirmDetail />} />
             <Route path="/firm/:slug/details" element={<FirmDetailExtended />} />
@@ -177,6 +202,7 @@ const App: React.FC = () => {
           </Routes>
         </main>
         <Footer />
+        <WhatsAppButton />
       </div>
     </Router>
   );
@@ -189,9 +215,10 @@ const Home: React.FC<{
   onFilterChange: (filters: Filters) => void;
   currentFilters: Filters;
   onSearch: (term: string) => void;
-}> = ({ firms, displayedFirms, onFilterChange, currentFilters, onSearch }) => (
+  tableRef: React.RefObject<HTMLDivElement>; // Añadir la referencia aquí
+}> = ({ firms, displayedFirms, onFilterChange, currentFilters, onSearch, tableRef }) => (
   <>
-    <HeroSection />
+    <HeroSection tableRef={tableRef} /> {/* Pasar la referencia al HeroSection */}
     <div className="w-full px-2 sm:px-4 py-8">
       <div className="mb-8">
         <SearchBar onSearch={onSearch} />
@@ -204,7 +231,7 @@ const Home: React.FC<{
             currentFilters={currentFilters}
           />
         </div>
-        <div className="lg:w-3/4 overflow-x-auto">
+        <div className="lg:w-3/4 overflow-x-auto" ref={tableRef}> {/* Asignar la referencia a la tabla */}
           <FirmTable firms={displayedFirms} />
         </div>
       </div>

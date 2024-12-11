@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../index.css';
 
@@ -12,7 +12,11 @@ declare global {
   }
 }
 
-const HeroSection: React.FC = () => {
+interface HeroSectionProps {
+  tableRef: React.RefObject<HTMLDivElement>;
+}
+
+const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
   useEffect(() => {
     const loadWidget = () => {
       const container = document.getElementById('tradingview-widget');
@@ -78,13 +82,19 @@ const HeroSection: React.FC = () => {
     };
   }, []);
 
+  const handleScroll = () => {
+    if (tableRef.current) {
+      tableRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <div className="relative min-h-[60vh] flex items-center">
         <div 
           className="absolute inset-0 bg-cover bg-center z-0"
           style={{
-            backgroundImage: 'url("/")',
+            backgroundImage: 'url("/LogoProp.jpeg")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -105,13 +115,14 @@ const HeroSection: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center mt-8">
               <Link 
-                to="/comparaciones" 
+                to="/" 
+                onClick={handleScroll}
                 className="border-2 border-[#2962ff] hover:bg-[#2962ff] text-white px-10 py-4 rounded-lg text-lg font-semibold transition-all inline-block"
               >
                 Comparar Firmas
               </Link>
               <Link 
-                to="/recursos" 
+                to="/herramientas" 
                 className="border-2 border-white hover:bg-white hover:text-[#2962ff] text-white px-10 py-4 rounded-lg text-lg font-semibold transition-all inline-block"
               >
                 Recursos Gratuitos
@@ -124,9 +135,16 @@ const HeroSection: React.FC = () => {
       <div className="bg-black border-t border-b border-gray-800">
         <div 
           id="tradingview-widget"
-          className="w-full overflow-hidden h-42"
+          className="w-full overflow-hidden h-45"
           style={{ 
             position: 'relative',
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexWrap: 'nowrap',
+            overflowX: 'auto',
+            fontSize: '0.8rem',
           }}
         />
       </div>

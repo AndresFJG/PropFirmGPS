@@ -4,6 +4,7 @@ import { Firm } from '../backend/types';
 import FirmDetails from './FirmDetails';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import '../index.css';
+import { firmLinks } from '../backend/firmData';
 
 
 // Modal Component
@@ -126,7 +127,7 @@ const FirmTable: React.FC<FirmTableProps> = ({ firms, isFilterPanelOpen = false 
                       </span>
                     </Link>
                   </td>
-                  <td className="py-4 px-2 sm:px-6 font-mono">{firm['PRICE'] ? `${firm['PRICE']}` : 'N/A'}</td>
+                  <td  className="py-4 px-2 sm:px-6 font-mono">{firm['PRICE'] ? `${firm['PRICE']}` : 'N/A'}</td>
                   <td className="py-4 px-2 sm:px-6 font-mono">{firm['ACCOUNT SIZE'] ? `${firm['ACCOUNT SIZE']}` : 'N/A'}</td>
                   <td className="py-4 px-2 sm:px-6 font-mono">{firm['STEPS'] ? `${firm['STEPS']}` : 'N/A'}</td>
                   <td className="py-4 px-2 sm:px-6 hidden md:table-cell font-mono">{firm['PROFIT TARGET'] ? `${firm['PROFIT TARGET']}` : 'N/A'}%</td>
@@ -140,18 +141,18 @@ const FirmTable: React.FC<FirmTableProps> = ({ firms, isFilterPanelOpen = false 
                       <span className="font-medium">{firm['Trust Pilot Rating'] ? `${firm['Trust Pilot Rating']}` : 'N/A'}</span>
                     </div>
                   </td>
-                  <td className="py-4 px-2 sm:px-6">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        alert(`Comprar: ${firm['FIRM']}`);
-                      }}
-                      className="bg-gradient-to-r from-[#04a8c2] to-[#67d6e9] text-white px-4 py-2 rounded-lg
+                  <td className="py-4 px-2 sm:px-6" id='firm-table-body'>
+                    <a
+                      href={firmLinks.find(link => link.name === firm['FIRM'])?.websiteUrl || '#'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-block bg-gradient-to-r from-[#04a8c2] to-[#67d6e9] text-white px-4 py-2 rounded-lg
                         hover:from-[#67d6e9] hover:to-[#04a8c2] transition-all duration-300 shadow-lg
-                        hover:shadow-[#04a8c2]/20 font-medium"
+                        hover:shadow-[#04a8c2]/20 font-medium text-center"
                     >
                       Comprar
-                    </button>
+                    </a>
                   </td>
                 </tr>
               ))}

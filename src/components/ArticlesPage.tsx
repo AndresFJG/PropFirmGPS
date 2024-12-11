@@ -133,7 +133,7 @@ const ArticlesPage: React.FC = () => {
                      transition-all duration-300 
                      border border-[#2a2e39] hover:border-[#2962ff]/30 
                      hover:bg-gradient-to-br hover:from-[#1e222d] hover:via-[#1e222d] hover:to-[#2962ff]/10
-                     h-[400px]"
+                     h-auto md:h-[400px]"
           >
             <div className="flex flex-col md:flex-row h-full">
               {/* Imagen Principal */}
@@ -164,11 +164,11 @@ const ArticlesPage: React.FC = () => {
               </div>
 
               {/* Contenido Central */}
-              <div className="md:w-1/3 p-6 flex flex-col justify-between 
+              <div className="md:w-1/3 p-4 md:p-6 flex flex-col justify-between 
                             border-r border-[#2a2e39] h-full
                             bg-gradient-to-b from-transparent via-transparent to-[#2962ff]/5">
                 <div>
-                  <h2 className="text-xl font-bold text-[#d1d4dc] mb-3 line-clamp-2 
+                  <h2 className="text-lg md:text-xl font-bold text-[#d1d4dc] mb-3 line-clamp-2 
                                hover:text-[#2962ff] transition-colors duration-200 font-poppins">
                     {article.title}
                   </h2>
@@ -183,7 +183,7 @@ const ArticlesPage: React.FC = () => {
               </div>
 
               {/* Tarjeta Lateral */}
-              <div className="md:w-1/3 p-6 bg-gradient-to-br from-[#131722] via-[#131722] to-[#2962ff]/5 
+              <div className="md:w-1/3 p-4 md:p-6 bg-gradient-to-br from-[#131722] via-[#131722] to-[#2962ff]/5 
                             h-full flex flex-col justify-between">
                 <div className="flex items-center space-x-4 mb-6">
                   <div className="w-12 h-12 rounded-lg overflow-hidden 

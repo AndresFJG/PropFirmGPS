@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaExternalLinkAlt, FaInfoCircle, FaStar, FaTimes } from 'react-icons/fa';
 import useReviews from '../hooks/useReviews';
 
-interface TopFirm {
+export interface TopFirm {
   id: string;
   name: string;
   logo: string;
@@ -212,7 +212,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '20%',
         description: 'Use code: GPSAF'
       },
-      websiteUrl: 'https://alphafutures.com',
+      websiteUrl: 'https://app.alpha-futures.com/signup/Kevin_Santiago000652/',
       slug: 'alpha-futures-review',
       rating: 4.7,
       ratingCount: 1245,
@@ -251,7 +251,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '20%',
         description: 'Use code: GPSAQUA'
       },
-      websiteUrl: 'https://aquafunded.com',
+      websiteUrl: 'https://checkout.aquafunded.com/ref/2636/',
       slug: 'aqua-funded-review',
       rating: 4.6,
       ratingCount: 923,
@@ -325,7 +325,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '10%',
         description: 'Use code: GPSAUD'
       },
-      websiteUrl: 'https://audacitycapital.com',
+      websiteUrl: 'https://trade.audacitycapital.co.uk/user-auth/register?referral_code=3cf2ab&utm_source=client&utm_medium=referral',
       slug: 'audacity-capital-review',
       rating: 4.5,
       ratingCount: 745,
@@ -362,7 +362,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '15%',
         description: 'Use code: GPSBB'
       },
-      websiteUrl: 'https://blueberryfunded.com',
+      websiteUrl: 'https://blueberryfunded.com/?utm_source=affiliate&ref=890',
       slug: 'blueberry-funded-review',
       rating: 4.5,
       ratingCount: 634,
@@ -399,7 +399,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '25%',
         description: 'Use code: GPSBG'
       },
-      websiteUrl: 'https://blueguardian.com',
+      websiteUrl: 'https://checkout.blueguardian.com/ref/1332/',
       slug: 'blue-guardian-review',
       rating: 4.5,
       ratingCount: 856,
@@ -473,7 +473,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '15%',
         description: 'Use code: GPSBF'
       },
-      websiteUrl: 'https://brightfunded.com',
+      websiteUrl: 'https://brightfunded.com?affiliateId=QJ_cPWSJQ8qdruCfibN98w',
       slug: 'brightfunded-review',
       rating: 4.4,
       ratingCount: 478,
@@ -510,7 +510,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '20%',
         description: 'Use code: GPSCFT'
       },
-      websiteUrl: 'https://cryptofundtrader.com',
+      websiteUrl: 'https://cryptofundtrader.com?_por=kevin-santiago25',
       slug: 'crypto-fund-trader-review',
       rating: 4.3,
       ratingCount: 345,
@@ -584,7 +584,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '25%',
         description: 'Use code: GPSE8'
       },
-      websiteUrl: 'https://e8markets.com',
+      websiteUrl: 'https://e8markets.com/a/A78708E9',
       slug: 'e8-markets-review',
       rating: 4.5,
       ratingCount: 678,
@@ -658,7 +658,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '20%',
         description: 'Use code: GPSET'
       },
-      websiteUrl: 'https://elitetrader.com',
+      websiteUrl: 'https://elitetraderfunding.com/?ref=propfirmgps',
       slug: 'elitetrader-review',
       rating: 4.4,
       ratingCount: 567,
@@ -880,7 +880,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '25%',
         description: 'Use code: GPSGFT'
       },
-      websiteUrl: 'https://goatfundedtrader.com',
+      websiteUrl: 'https://goatfundedtrader.com/aff/1871/',
       slug: 'goatfundedtrader-review',
       rating: 4.2,
       ratingCount: 345,
@@ -1028,7 +1028,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '25%',
         description: 'Use code: GPSMFX'
       },
-      websiteUrl: 'https://myfundedfx.com',
+      websiteUrl: 'https://myfundedfx.tech/purchasechallenge/?sl=10723',
       slug: 'myfundedfx-review',
       rating: 4.3,
       ratingCount: 432,
@@ -1324,7 +1324,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '25%',
         description: 'Use code: GPSAPEX'
       },
-      websiteUrl: 'https://apexfutures.com',
+      websiteUrl: 'https://apextraderfunding.com/member/aff/go/propfirmgps',
       slug: 'apex-futures-review',
       rating: 4.8,
       ratingCount: 1567,
