@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Firm } from '../backend/types';
 import FirmDetails from './FirmDetails';
@@ -43,13 +43,19 @@ interface FirmTableProps {
 }
 
 const FirmTable: React.FC<FirmTableProps> = ({ firms, isFilterPanelOpen = false }) => {
+  useEffect(() => {
+    console.log('Firms actualizadas en FirmTable:', firms?.length || 0);
+  }, [firms]);
+
+  // Validar que firms sea un array
+  const validFirms = Array.isArray(firms) ? firms : [];
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedFirm, setSelectedFirm] = useState<Firm | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const rowsPerPage = 15;
 
-  const totalPages = Math.ceil(firms.length / rowsPerPage);
-  const currentFirms = firms.slice(
+  const totalPages = Math.ceil(validFirms.length / rowsPerPage);
+  const currentFirms = validFirms.slice(
     currentPage * rowsPerPage,
     (currentPage + 1) * rowsPerPage
   );

@@ -86,9 +86,46 @@ const App: React.FC = () => {
   useEffect(() => {
     try {
       const filteredFirms = allFirms.filter(firm => {
-        const matchesSearch = searchTerm === '' || 
-          firm['FIRM']?.toString().toLowerCase().includes(searchTerm.toLowerCase());
-        return matchesSearch;
+        try {
+          // Verificar si coincide con el término de búsqueda
+          const matchesSearch = searchTerm === '' || 
+            firm['FIRM']?.toString().toLowerCase().includes(searchTerm.toLowerCase());
+
+          // Verificar si coincide con los filtros seleccionados
+          const matchesFilters = Object.entries(filters).every(([category, selectedValues]) => {
+            if (!selectedValues || selectedValues.length === 0) return true;
+
+            const firmValue = firm[category] || '';
+            
+            switch (category) {
+              case 'accountSizes':
+                return selectedValues.includes(String(firm['ACCOUNT SIZE'] || ''));
+              case 'steps':
+                return selectedValues.includes(String(firm['STEPS'] || ''));
+              case 'platforms': {
+                const platforms = String(firm['PLATFORMS'] || '').split(',').map(p => p.trim());
+                return selectedValues.some((value: string) => platforms.includes(value));
+              }
+              case 'instruments': {
+                const instruments = String(firm['INSTRUMENTS'] || '').split(',').map(i => i.trim());
+                return selectedValues.some((value: string) => instruments.includes(value));
+              }
+              case 'brokers':
+                return selectedValues.includes(String(firm['Broker'] || ''));
+              case 'maxDrawdown': {
+                const drawdown = parseFloat(String(firm['MAX. TOTAL DRAWDOWN'] || '0'));
+                return !isNaN(drawdown) && selectedValues.some((value: string) => drawdown <= parseFloat(value));
+              }
+              default:
+                return true;
+            }
+          });
+
+          return matchesSearch && matchesFilters;
+        } catch (error) {
+          console.error('Error filtering firm:', firm, error);
+          return false;
+        }
       });
 
       setDisplayedFirms(filteredFirms);
@@ -134,7 +171,7 @@ const App: React.FC = () => {
             <Route path="/firm/:slug/details" element={<FirmDetailExtended />} />
             <Route path="/herramientas" element={<TradingTools setSelectedCurrency={setSelectedCurrency} />}>
               <Route index element={<Navigate to="/herramientas/calculadoras" replace />} />
-              <Route path="calculadoras" element={<PositionSizeCalculator />} />
+              <Route path="calculadoras" element={<PositionSizeCalculator />} />s
               <Route path="analisis" element={<TradingViewWidget currency1={selectedCurrency} currency2="USD" />} />
               <Route path="riesgo" element={<RiskManagement />} />
               <Route path="beneficios" element={<ProfitCalculator />} />

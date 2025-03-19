@@ -3,7 +3,7 @@ import { Filters, FilterPanelProps} from '../backend/types';
 import { FaFilter, FaChevronDown, FaTimes, FaCheck } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../index.css';
-import { logEvent } from '../types/analytics';
+import { logEvent, logError } from '../types/analytics';
 
 interface ActiveFilter {
   category: string;
@@ -57,7 +57,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
   const [isExpanded, setIsExpanded] = useState(true);
   const [localFilters, setLocalFilters] = useState<Filters>(currentFilters);
 
-  // Sincronizar localFilters con currentFilters
+  // Asegurarnos de que localFilters se actualice cuando currentFilters cambie
   useEffect(() => {
     setLocalFilters(currentFilters);
   }, [currentFilters]);
@@ -81,17 +81,20 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
     e.preventDefault();
     e.stopPropagation();
     
-    const newFilters = {
-      ...localFilters,
-      [category]: localFilters[category].includes(value)
-        ? localFilters[category].filter(v => v !== value)
-        : [...localFilters[category], value]
-    };
-    
-    if (JSON.stringify(newFilters) !== JSON.stringify(localFilters)) {
+    try {
+      const newFilters = {
+        ...localFilters,
+        [category]: localFilters[category].includes(value)
+          ? localFilters[category].filter(v => v !== value)
+          : [...localFilters[category], value]
+      };
+      
       setLocalFilters(newFilters);
       onFilterChange(newFilters);
       handleFilterChange(category, value);
+    } catch (error) {
+      console.error('Error in filter click:', error);
+      logError(error instanceof Error ? error : new Error('Error in filter click'), 'Filter Click');
     }
   };
 
