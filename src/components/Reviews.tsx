@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import '../index.css'
+import { logEvent } from '../types/analytics';
 
 interface Review {
   user: string;
@@ -8,6 +9,7 @@ interface Review {
   comment: string;
   date: string;
   avatar: string;
+  id: string;
 }
 
 const reviews: Review[] = [
@@ -16,56 +18,64 @@ const reviews: Review[] = [
     rating: 4,
     comment: 'Excelente plataforma, muy fácil de usar y con información clara sobre las empresas.',
     date: '20 de Octubre, 2024',
-    avatar: 'JP'
+    avatar: 'JP',
+    id: 'JP'
   },
   {
     user: 'María Rodríguez',
     rating: 5,
     comment: 'Me ayudó a encontrar la empresa adecuada para mi estilo de trading. Muy recomendada.',
     date: '15 de Octubre, 2024',
-    avatar: 'MR'
+    avatar: 'MR',
+    id: 'MR'
   },
   {
     user: 'Carlos Gómez',
     rating: 3,
     comment: 'La plataforma es buena, pero me gustaría ver más opciones de empresas.',
     date: '10 de Octubre, 2024',
-    avatar: 'CG'
+    avatar: 'CG',
+    id: 'CG'
   },
   {
     user: 'Ana López',
     rating: 5,
     comment: 'Gran experiencia. Me gusta la comparación de precios y las reseñas imparciales.',
     date: '5 de Octubre, 2024',
-    avatar: 'AL'
+    avatar: 'AL',
+    id: 'AL'
   },
   {
     user: 'Luis Fernández',
     rating: 4,
     comment: 'La interfaz es intuitiva y fácil de navegar.',
     date: '1 de Noviembre, 2024',
-    avatar: 'LF'
+    avatar: 'LF',
+    id: 'LF'
   },
   {
     user: 'Sofía Martínez',
     rating: 5,
     comment: 'Excelente atención al cliente y soporte técnico.',
     date: '2 de Noviembre, 2024',
-    avatar: 'SM'
+    avatar: 'SM',
+    id: 'SM'
   },
   {
     user: 'Pedro Sánchez',
     rating: 4,
     comment: 'Tuve algunos problemas técnicos, pero el soporte fue útil.',
     date: '3 de Noviembre, 2024',
-    avatar: 'PS'
+    avatar: 'PS',
+    id: 'PS'
   },
   {
     user: 'Clara Torres',
     rating: 4,
     comment: 'Me gusta la variedad de opciones de trading que ofrecen.',
     date: '4 de Noviembre, 2024',
-    avatar: 'CT'
+    avatar: 'CT',
+    id: 'CT'
   },
 ];
 
@@ -96,14 +106,19 @@ const Reviews: React.FC = () => {
     }
   };
 
-  const handleUsefulClick = (index: number) => {
-    const newCount = [...usefulCount];
-    newCount[index] += 1;
-    setUsefulCount(newCount);
+  const handleUsefulClick = (reviewId: string, index: number) => {
+    logEvent('Review', 'Marcar Útil', reviewId);
+    const newCounts = [...usefulCount];
+    newCounts[index] += 1;
+    setUsefulCount(newCounts);
   };
 
-  const handleShareClick = (comment: string) => {
-    alert(`Compartir: ${comment}`);
+  const handleShareClick = (reviewId: string) => {
+    logEvent('Review', 'Compartir', reviewId);
+  };
+
+  const handleReviewClick = (reviewId: string) => {
+    logEvent('Reviews', 'Ver Review', reviewId);
   };
 
   return (
@@ -153,6 +168,7 @@ const Reviews: React.FC = () => {
                            hover:shadow-lg hover:shadow-[#2962ff]/5
                            hover:translate-y-[-4px]
                            scroll-snap-align-start"
+                onClick={() => handleReviewClick(review.id)}
               >
                 {/* Header del Review */}
                 <div className="flex items-start space-x-3 mb-3">
@@ -194,6 +210,27 @@ const Reviews: React.FC = () => {
                   <p className="text-[#d1d4dc] text-sm leading-relaxed font-inter line-clamp-4">
                     {review.comment}
                   </p>
+                </div>
+
+                <div>
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleUsefulClick(review.id, index);
+                    }}
+                    className="text-xs text-[#787b86] font-inter hover:text-[#2962ff] transition-colors duration-200"
+                  >
+                    Útil ({usefulCount[index]})
+                  </button>
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleShareClick(review.id);
+                    }}
+                    className="text-xs text-[#787b86] font-inter"
+                  >
+                    Compartir
+                  </button>
                 </div>
               </div>
             ))}

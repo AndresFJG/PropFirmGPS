@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../index.css';
 
@@ -18,64 +18,54 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
   useEffect(() => {
-    const loadWidget = () => {
-      const container = document.getElementById('tradingview-widget');
-      if (!container) return;
+    const container = document.getElementById('tradingview-widget');
+    if (!container) return;
 
-      container.innerHTML = `
-        <div class="tradingview-widget-container">
-          <div class="tradingview-widget-container__widget"></div>
-        </div>
-      `;
+    container.innerHTML = `
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+      </div>
+    `;
 
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.async = true;
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.async = true;
+    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
 
-      const config = {
-        "symbols": [
-          {
-            "proName": "FOREXCOM:SPXUSD",
-            "title": "S&P 500"
-          },
-          {
-            "proName": "FOREXCOM:NSXUSD",
-            "title": "Nasdaq 100"
-          },
-          {
-            "proName": "FX_IDC:EURUSD",
-            "title": "EUR/USD"
-          },
-          {
-            "proName": "BITSTAMP:BTCUSD",
-            "title": "Bitcoin"
-          },
-          {
-            "proName": "BITSTAMP:ETHUSD",
-            "title": "Ethereum"
-          }
-        ],
-        "showSymbolLogo": true,
-        "colorTheme": "dark",
-        "isTransparent": false,
-        "displayMode": "adaptive",
-        "locale": "es"
-      };
-
-      const widgetContainer = container.querySelector('.tradingview-widget-container__widget');
-      if (widgetContainer) {
-        widgetContainer.setAttribute('data-widget-config', JSON.stringify(config));
-      }
-
-      script.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
-      container.appendChild(script);
+    const config = {
+      symbols: [
+        {
+          proName: "FOREXCOM:SPXUSD",
+          title: "S&P 500"
+        },
+        {
+          proName: "FOREXCOM:NSXUSD",
+          title: "Nasdaq 100"
+        },
+        {
+          proName: "FX_IDC:EURUSD",
+          title: "EUR/USD"
+        },
+        {
+          proName: "BITSTAMP:BTCUSD",
+          title: "Bitcoin"
+        },
+        {
+          proName: "BITSTAMP:ETHUSD",
+          title: "Ethereum"
+        }
+      ],
+      showSymbolLogo: true,
+      colorTheme: "dark",
+      isTransparent: false,
+      displayMode: "adaptive",
+      locale: "es"
     };
 
-    const timeoutId = setTimeout(loadWidget, 100);
+    script.innerHTML = JSON.stringify(config);
+    container.appendChild(script);
 
     return () => {
-      clearTimeout(timeoutId);
-      const container = document.getElementById('tradingview-widget');
       if (container) {
         container.innerHTML = '';
       }
@@ -90,6 +80,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
 
   return (
     <>
+      {/* Primera sección: Hero principal */}
       <div className="relative min-h-[60vh] flex items-center">
         <div 
           className="absolute inset-0 bg-cover bg-center z-0"
@@ -132,24 +123,19 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
         </div>
       </div>
 
-      <div className="bg-black border-t border-b border-gray-800">
+      {/* Segunda sección: Widget de TradingView */}
+      <div className="bg-[#131722] border-t border-b border-gray-800">
         <div 
-          id="tradingview-widget"
-          className="w-full overflow-hidden h-45"
-          style={{ 
-            position: 'relative',
-            textAlign: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexWrap: 'nowrap',
-            overflowX: 'auto',
-            fontSize: '0.8rem',
+          id="tradingview-widget" 
+          className="tradingview-widget-container"
+          style={{
+            width: '100%',
+            height: '40px'
           }}
-        />
+        >
+          <div className="tradingview-widget-container__widget"></div>
+        </div>
       </div>
-
-      <div className="h-1 bg-gradient-to-b from-black/20 to-transparent"></div>
     </>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Firm } from '../backend/types';
 import '../index.css';
+import { logEvent } from '../types/analytics';
 
 interface FirmDetailsProps {
   firm: Firm;
@@ -20,6 +21,10 @@ const simulatedMarketValues = {
 };
 
 const FirmDetails: React.FC<FirmDetailsProps> = ({ firm }) => {
+  const handleFirmClick = (actionType: string, detail?: string) => {
+    logEvent('Firma', actionType, `${firm.name} - ${detail}`);
+  };
+
   return (
     <div className="bg-gradient-to-br from-[#131722] via-[#1e222d] to-[#2962ff]/10 p-4 sm:p-8 rounded-2xl max-h-[80vh] overflow-y-auto
                     scrollbar-thin scrollbar-thumb-[#2962ff]/20 scrollbar-track-[#1e222d]
@@ -70,10 +75,13 @@ const FirmDetails: React.FC<FirmDetailsProps> = ({ firm }) => {
       </div>
 
       {/* Detalles completos */}
-      <div className="bg-gradient-to-br from-[#1e222d] via-[#1e222d] to-[#2962ff]/5 rounded-xl 
+      <div 
+        onClick={() => handleFirmClick('Ver Detalles', 'Características')}
+        className="bg-gradient-to-br from-[#1e222d] via-[#1e222d] to-[#2962ff]/5 rounded-xl 
                     border border-[#2a2e39] overflow-hidden
                     hover:border-[#2962ff]/30 transition-all duration-300
-                    shadow-lg hover:shadow-[#2962ff]/10">
+                    shadow-lg hover:shadow-[#2962ff]/10"
+      >
         <div className="bg-gradient-to-r from-[#2962ff]/10 via-[#2962ff]/5 to-transparent 
                      px-4 sm:px-6 py-2 sm:py-4 border-b border-[#2a2e39]">
           <h3 className="text-lg sm:text-xl font-semibold text-[#d1d4dc] font-poppins">

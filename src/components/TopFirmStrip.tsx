@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaExternalLinkAlt, FaInfoCircle, FaStar, FaTimes } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaInfoCircle, FaStar } from 'react-icons/fa';
 import useReviews from '../hooks/useReviews';
 
 export interface TopFirm {
@@ -436,7 +436,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '20%',
         description: 'Use code: GPSBC'
       },
-      websiteUrl: 'https://breakoutcrypto.com',
+      websiteUrl: 'http://dashboard.breakoutprop.com/evaluation?affiliateId=https://propfirmgps.netlify.app/',
       slug: 'breakout-crypto-review',
       rating: 4.4,
       ratingCount: 523,
@@ -917,7 +917,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '20%',
         description: 'Use code: GPSIF'
       },
-      websiteUrl: 'https://instantfunding.com',
+      websiteUrl: 'https://instantfunding.io?partner=2030',
       slug: 'instantfunding-review',
       rating: 4.3,
       ratingCount: 432,

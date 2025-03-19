@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Firm } from '../backend/types';
 import FirmDetails from './FirmDetails';
@@ -75,11 +75,6 @@ const FirmTable: React.FC<FirmTableProps> = ({ firms, isFilterPanelOpen = false 
       setCurrentPage(currentPage - 1);
     }
   };
-
-  // Agregar console.log para debugging
-  useEffect(() => {
-    console.log('Firms en tabla:', firms);
-  }, [firms]);
 
   return (
     <div className={`flex flex-col h-auto w-full p-6 bg-[#1e222d] rounded-lg shadow-xl border border-[#2a2e39]/30 

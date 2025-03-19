@@ -17,6 +17,7 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ currency1, curren
       
       <div className="w-full h-[400px] md:h-[600px] bg-[#131722] rounded-lg border border-[#2a2e39] overflow-hidden">
         <iframe
+          title="TradingView Chart"
           src={widgetUrl}
           style={{ width: '100%', height: '100%' }}
           frameBorder="0"

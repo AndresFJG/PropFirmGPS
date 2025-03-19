@@ -2,16 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
 import '../index.css';
+import { logEvent } from '../types/analytics';
 
 const Footer: React.FC = () => {
-  const openTermsAndPrivacy = () => {
-    window.location.href = '/terms-and-privacy';
+  const handleFooterClick = (linkType: string) => {
+    logEvent('Footer', 'Click Link', linkType);
   };
-  const openPrivacyPolicyFooter = () => {
-    window.location.href = '/privacy-policy';
-  };
-  const openFAQ = () => {
-    window.location.href = '/faq';
+
+  const handleNavigation = (destination: string) => {
+    logEvent('Footer', 'Navegación', destination);
   };
 
   return (
@@ -40,21 +39,24 @@ const Footer: React.FC = () => {
               <li>
                 <Link 
                   to="/terms-and-privacy" 
-                  className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
+                  className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter"
+                  onClick={() => handleNavigation('Términos y Privacidad')}>
                   Términos de Servicio
                 </Link>
               </li>
               <li>
                 <Link 
                   to="/privacy-policy" 
-                  className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
+                  className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter"
+                  onClick={() => handleNavigation('Política de Privacidad')}>
                   Política de Privacidad
                 </Link>
               </li>
               <li>
                 <Link 
                   to="/faq" 
-                  className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
+                  className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter"
+                  onClick={() => handleNavigation('FAQ')}>
                   Preguntas Frecuentes
                 </Link>
               </li>
@@ -69,19 +71,22 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
               <li>
                 <Link to="/blog" 
-                      className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
+                      className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter"
+                      onClick={() => handleFooterClick('Blog')}>
                   Blog
                 </Link>
               </li>
               <li>
                 <Link to="/centro-recursos" 
-                      className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
+                      className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter"
+                      onClick={() => handleFooterClick('Educación')}>
                   Educación
                 </Link>
               </li>
               <li>
                 <Link to="/articulos" 
-                      className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter">
+                      className="text-[#787b86] hover:text-[#2962ff] transition-colors duration-300 font-inter"
+                      onClick={() => handleFooterClick('Noticias')}>
                   Noticias
                 </Link>
               </li>
@@ -97,25 +102,29 @@ const Footer: React.FC = () => {
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
                  className="w-10 h-10 rounded-full bg-[#2a2e39] hover:bg-[#2962ff] 
                           flex items-center justify-center transition-all duration-300
-                          text-[#787b86] hover:text-white">
+                          text-[#787b86] hover:text-white"
+                 onClick={() => handleFooterClick('Facebook')}>
                 <FaFacebookF size={18} />
               </a>
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
                  className="w-10 h-10 rounded-full bg-[#2a2e39] hover:bg-[#2962ff] 
                           flex items-center justify-center transition-all duration-300
-                          text-[#787b86] hover:text-white">
+                          text-[#787b86] hover:text-white"
+                 onClick={() => handleFooterClick('Twitter')}>
                 <FaTwitter size={18} />
               </a>
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
                  className="w-10 h-10 rounded-full bg-[#2a2e39] hover:bg-[#2962ff] 
                           flex items-center justify-center transition-all duration-300
-                          text-[#787b86] hover:text-white">
+                          text-[#787b86] hover:text-white"
+                 onClick={() => handleFooterClick('LinkedIn')}>
                 <FaLinkedinIn size={18} />
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
                  className="w-10 h-10 rounded-full bg-[#2a2e39] hover:bg-[#2962ff] 
                           flex items-center justify-center transition-all duration-300
-                          text-[#787b86] hover:text-white">
+                          text-[#787b86] hover:text-white"
+                 onClick={() => handleFooterClick('Instagram')}>
                 <FaInstagram size={18} />
               </a>
             </div>

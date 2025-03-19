@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import Papa from 'papaparse';
+import { logEvent } from '../types/analytics';
 
 interface FirmDetailData {
   'Profirm Name': string;
@@ -17,6 +18,7 @@ interface FirmDetailData {
   'LEVERAGE': string;
   'COMMISSIONS': string;
   'DEMO ACCOUNT': string;
+  'websiteUrl': string;
 }
 
 interface AccountData {
@@ -86,6 +88,14 @@ const FirmDetailExtended: React.FC = () => {
     });
   }, [slug]);
 
+  const handleAccountClick = (accountSize: string) => {
+    logEvent('Cuenta', 'Ver Detalles', accountSize);
+  };
+
+  const handleWebsiteClick = (firmName: string) => {
+    logEvent('Sitio Web', 'Click Externo', firmName);
+  };
+
   if (!firmData) return <div>Cargando...</div>;
 
   return (
@@ -146,6 +156,22 @@ const FirmDetailExtended: React.FC = () => {
                 <InfoItem label="Información" value={firmData['DEMO ACCOUNT']} />
               </InfoSection>
             )}
+
+            <InfoSection title="Sitio Web">
+              <InfoItem label="Sitio Web" value={firmData['websiteUrl']} />
+            </InfoSection>
+          </div>
+
+          <div className="mt-6">
+            <a
+              href={firmData?.websiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => handleWebsiteClick(firmData['Profirm Name'])}
+              className="text-[#2962ff] text-sm font-medium uppercase tracking-wide font-inter"
+            >
+              Visitar Sitio Oficial
+            </a>
           </div>
         </div>
 
@@ -182,7 +208,12 @@ const FirmDetailExtended: React.FC = () => {
               </thead>
               <tbody className="space-y-2">
                 {accounts.map((account, index) => (
-                  <tr key={index} className="transition-all duration-200">
+                  <tr 
+                    key={index} 
+                    className="transition-all duration-200"
+                    onClick={() => handleAccountClick(account['ACCOUNT SIZE'])}
+                    style={{ cursor: 'pointer' }}
+                  >
                     {[
                       { value: account['ACCOUNT SIZE'], align: 'text-left' },
                       { value: account['PRICE'], align: 'text-right' },

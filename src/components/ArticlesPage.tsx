@@ -87,7 +87,7 @@ const getMarketSymbol = (article: Article): string => {
 };
 
 const ArticlesPage: React.FC = () => {
-  const { articles, loading, error } = useArticles();
+  const { articles } = useArticles();
   const [visibleArticles, setVisibleArticles] = useState(5);
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [showArticleSummary, setShowArticleSummary] = useState(false);
@@ -207,7 +207,7 @@ const ArticlesPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-3 mt-auto">
-                  <a
+                  <button
                     onClick={(e) => {
                       e.preventDefault();
                       handleArticleClick(article);
@@ -221,7 +221,7 @@ const ArticlesPage: React.FC = () => {
                              cursor-pointer"
                   >
                     Leer Artículo Completo
-                  </a>
+                  </button>
                   
                   <button
                     onClick={() => handleMarketAnalysisClick(article)}

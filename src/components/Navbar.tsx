@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes, FaChevronDown, FaTools, FaCalculator, FaChartLine, FaBalanceScale, FaPercent } from 'react-icons/fa';
+import { logEvent } from '../types/analytics';
 
 const Navbar: React.FC = () => {
   const location = useLocation();
@@ -14,6 +15,10 @@ const Navbar: React.FC = () => {
     { name: 'Calculadora de Beneficios', path: '/herramientas/beneficios', icon: FaPercent },
   ];
 
+  const handleNavClick = (section: string) => {
+    logEvent('Navegación', 'Click Menú', section);
+  };
+
   return (
     <>
       <div className="h-16"></div>
@@ -25,6 +30,7 @@ const Navbar: React.FC = () => {
             <div className="flex-shrink-0">
               <Link 
                 to="/" 
+                onClick={() => handleNavClick('Inicio')}
                 className="flex items-center space-x-2"
               >
                 <span className="text-xl font-bold bg-gradient-to-r from-[#d1d4dc] via-[#5B8CFF] to-[#2962ff] text-transparent bg-clip-text hover:from-[#ffffff] hover:to-[#5B8CFF] transition-all duration-300">

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import { FaCalculator, FaChartLine, FaBalanceScale, FaPercent } from 'react-icons/fa';
-import TradingViewWidget from './tools/TradingViewWidget';
+import { logEvent } from '../types/analytics';
 
 interface TradingToolsProps {
   setSelectedCurrency: React.Dispatch<React.SetStateAction<string>>;
@@ -73,6 +73,10 @@ const TradingTools: React.FC<TradingToolsProps> = ({ setSelectedCurrency }) => {
     setSelectedCurrencyLocal(newCurrency);
   };
 
+  const handleToolClick = (toolName: string) => {
+    logEvent('Herramientas', 'Usar Herramienta', toolName);
+  };
+
   React.useEffect(() => {
     setShowCurrencySelector(location.pathname === '/herramientas/analisis');
   }, [location.pathname]);
@@ -98,6 +102,7 @@ const TradingTools: React.FC<TradingToolsProps> = ({ setSelectedCurrency }) => {
               } else {
                 setShowCurrencySelector(false);
               }
+              handleToolClick(tool.label);
             }}
           >
             

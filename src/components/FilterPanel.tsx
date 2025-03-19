@@ -3,6 +3,7 @@ import { Filters, FilterPanelProps} from '../backend/types';
 import { FaFilter, FaChevronDown, FaTimes, FaCheck } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../index.css';
+import { logEvent } from '../types/analytics';
 
 interface ActiveFilter {
   category: string;
@@ -90,7 +91,13 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
     if (JSON.stringify(newFilters) !== JSON.stringify(localFilters)) {
       setLocalFilters(newFilters);
       onFilterChange(newFilters);
+      handleFilterChange(category, value);
     }
+  };
+
+  const handleFilterChange = (filterType: string, value: string) => {
+    logEvent('Filtros', 'Cambiar Filtro', `${filterType}: ${value}`);
+    // Aquí puedes agregar más lógica si es necesario
   };
 
   const FilterButton: React.FC<{

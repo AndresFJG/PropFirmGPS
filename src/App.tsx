@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useMemo, useRef } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import FilterPanel from './components/FilterPanel';
@@ -26,6 +26,10 @@ import FAQ from './components/FAQ';
 import ResourceCenter from './components/ResourceCenter';
 import Blog from './components/Blog';
 import WhatsAppButton from './components/WhatsAppButton';
+import { logPageView, logError } from './types/analytics';
+import { useAnalytics } from './hooks/useAnalytics';
+import ErrorBoundary from './components/ErrorBoundary';
+
 
 const App: React.FC = () => {
   const [allFirms, setAllFirms] = useState<Firm[]>([]);
@@ -39,136 +43,77 @@ const App: React.FC = () => {
     maxDrawdown: [],
   });
   const [selectedCurrency, setSelectedCurrency] = useState<string>('EURUSD');
-  const [searchTerm, setSearchTerm] = useState<string>(''); // Estado para el término de búsqueda
-  const tableRef = useRef<HTMLDivElement | null>(null); // Crear referencia para la tabla
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const tableRef = useRef<HTMLDivElement | null>(null);
+  const location = useLocation();
 
-  // Cargar datos iniciales
+  useAnalytics();
+
+  // Mejorar el manejo de errores en la carga de datos
   useEffect(() => {
-    Papa.parse('/pro_firm_details_v2-profirm_gps_v1_separado.csv', {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: (result) => {
-        if (Array.isArray(result.data) && result.data.length > 0) {
-          console.log('Datos CSV cargados:', result.data); // Debug
-          setAllFirms(result.data as Firm[]);
-          setDisplayedFirms(result.data as Firm[]); // Inicializa displayedFirms
-        }
-      },
-      error: (error) => {
-        console.error('Error al leer el CSV:', error);
-      },
-    });
+    try {
+      Papa.parse('/pro_firm_details_v2-profirm_gps_v1_separado.csv', {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: (result) => {
+          if (Array.isArray(result.data) && result.data.length > 0) {
+            setAllFirms(result.data as Firm[]);
+            setDisplayedFirms(result.data as Firm[]);
+          }
+        },
+        error: (error) => {
+          console.error('Error parsing CSV:', error);
+          logError(new Error('Error parsing CSV file'), 'CSV Parser');
+        },
+      });
+    } catch (error) {
+      console.error('Error in CSV loading effect:', error);
+      logError(error instanceof Error ? error : new Error('Unknown error in CSV loading'), 'CSV Loading');
+    }
   }, []);
 
-  // Función mejorada de filtrado
-  const displayedFirmsFiltered = useMemo(() => {
-    return allFirms.filter(firm => {
-      // Filtro de tamaño de cuenta
-      const matchesAccountSize = filters.accountSizes.length === 0 || 
-        filters.accountSizes.some(size => {
-          const firmSize = String(firm['ACCOUNT SIZE'] || '').trim();
-          // Extraer solo el número y K del tamaño de la cuenta
-          const firmSizeBase = firmSize.split(' ')[0];
-          return firmSizeBase === size;
-        });
-
-      // Filtro de pasos
-      const matchesSteps = filters.steps.length === 0 || 
-        filters.steps.some(step => {
-          const firmSteps = String(firm.STEPS || '').trim();
-          return firmSteps === step;
-        });
-
-      // Filtro de plataformas
-      const matchesPlatform = filters.platforms.length === 0 || 
-        filters.platforms.some(platform => 
-          String(firm['Trading Platforms'] || '').toLowerCase().includes(platform.toLowerCase())
-        );
-
-      // Filtro de instrumentos
-      const matchesInstruments = filters.instruments.length === 0 || 
-        filters.instruments.some(instrument => 
-          String(firm.INSTRUMENTS || '').toLowerCase().includes(instrument.toLowerCase())
-        );
-
-      // Filtro de brokers
-      const matchesBroker = filters.brokers.length === 0 || 
-        filters.brokers.some(broker => 
-          String(firm['Broker'] || '').trim() === broker.trim()
-        );
-
-      // Filtro de drawdown
-      const matchesDrawdown = filters.maxDrawdown.length === 0 || 
-        filters.maxDrawdown.some(drawdown => {
-          const firmDrawdown = String(firm['MAX. TOTAL DRAWDOWN'] || '').replace('%', '');
-          return firmDrawdown === drawdown.replace('%', '');
-        });
-
-      return matchesAccountSize && matchesSteps && matchesPlatform && 
-             matchesInstruments && matchesBroker && matchesDrawdown;
-    });
-  }, [allFirms, filters]);
-
-  const handleSearch = (term: string) => {
-    setSearchTerm(term); // Actualiza el término de búsqueda
-
-    if (term.trim() === '') {
-      // Si el término de búsqueda está vacío, restablecer a todas las firmas
-      setDisplayedFirms(displayedFirmsFiltered);
-      return;
-    }
-
-    const filteredFirms = displayedFirmsFiltered.filter(firm => {
-      const firmName = firm['FIRM'] || '';
-      return firmName.toString().toLowerCase().includes(term.toLowerCase());
-    });
-
-    // Ordenar las firmas filtradas por la primera letra del término de búsqueda
-    const sortedFirms = filteredFirms.sort((a, b) => {
-      const aName = a['FIRM'] || '';
-      const bName = b['FIRM'] || '';
-      const firstLetter = term.charAt(0).toLowerCase();
-
-      // Comparar si la primera letra coincide
-      const aStartsWith = aName.toString().toLowerCase().startsWith(firstLetter);
-      const bStartsWith = bName.toString().toLowerCase().startsWith(firstLetter);
-
-      if (aStartsWith && !bStartsWith) return -1;
-      if (!aStartsWith && bStartsWith) return 1;
-      return aName.toString().localeCompare(bName.toString()); // Ordenar alfabéticamente si ambos coinciden
-    });
-
-    setDisplayedFirms(sortedFirms);
-  };
-
-  // Agregar console.log para debugging
   useEffect(() => {
-    console.log('Filtros actuales:', filters);
-    console.log('Firms filtradas:', displayedFirmsFiltered);
-  }, [filters, displayedFirmsFiltered]); 
+    logPageView();
+  }, [location]);
 
-  const handleFilterChange = (newFilters: Filters) => {
-    console.log('Aplicando nuevos filtros:', newFilters); // Debug
-    setFilters(newFilters);
-    // Actualizar displayedFirms solo si el buscador está vacío
-    if (searchTerm.trim() === '') {
-      setDisplayedFirms(displayedFirmsFiltered);
-    } else {
-      // Si hay un término de búsqueda, filtrar según el término de búsqueda
-      handleSearch(searchTerm);
-    }
-  };
+  // Memoizar la función de filtrado
+  const handleSearch = useCallback((term: string) => {
+    setSearchTerm(term);
+  }, []);
 
+  // Mejorar el manejo de errores en el efecto de filtrado
   useEffect(() => {
-    const newDisplayedFirms = displayedFirmsFiltered;
-    if (JSON.stringify(newDisplayedFirms) !== JSON.stringify(displayedFirms)) {
-      setDisplayedFirms(newDisplayedFirms);
+    try {
+      const filteredFirms = allFirms.filter(firm => {
+        const matchesSearch = searchTerm === '' || 
+          firm['FIRM']?.toString().toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesSearch;
+      });
+
+      setDisplayedFirms(filteredFirms);
+    } catch (error) {
+      console.error('Error in filtering firms:', error);
+      logError(error instanceof Error ? error : new Error('Error filtering firms'), 'Firm Filtering');
     }
-  }, [filters]);
+  }, [searchTerm, allFirms, filters]);
+
+  const handleFilterChange = useCallback((newFilters: Filters) => {
+    try {
+      setFilters(newFilters);
+      if (searchTerm.trim() === '') {
+        setDisplayedFirms(prevFirms => prevFirms);
+      } else {
+        handleSearch(searchTerm);
+      }
+    } catch (error) {
+      console.error('Error in filter change:', error);
+      logError(error instanceof Error ? error : new Error('Error changing filters'), 'Filter Change');
+    }
+  }, [searchTerm, handleSearch]);
 
   return (
-    <Router>
+    <ErrorBoundary>
       <div className="flex flex-col min-h-screen bg-[#131722] text-[#d1d4dc] font-inter">
         <Navbar />
         <main className="flex-grow">
@@ -180,7 +125,7 @@ const App: React.FC = () => {
                 onFilterChange={handleFilterChange}
                 currentFilters={filters}
                 onSearch={handleSearch}
-                tableRef={tableRef} // Pasar la referencia a la tabla
+                tableRef={tableRef}
               />
             } />
             <Route path="/articulos/*" element={<ArticlesPage />} />
@@ -204,7 +149,7 @@ const App: React.FC = () => {
         <Footer />
         <WhatsAppButton />
       </div>
-    </Router>
+    </ErrorBoundary>
   );
 };
 
@@ -215,7 +160,7 @@ const Home: React.FC<{
   onFilterChange: (filters: Filters) => void;
   currentFilters: Filters;
   onSearch: (term: string) => void;
-  tableRef: React.RefObject<HTMLDivElement>; // Añadir la referencia aquí
+  tableRef: React.RefObject<HTMLDivElement>;
 }> = ({ firms, displayedFirms, onFilterChange, currentFilters, onSearch, tableRef }) => (
   <>
     <HeroSection tableRef={tableRef} /> {/* Pasar la referencia al HeroSection */}
