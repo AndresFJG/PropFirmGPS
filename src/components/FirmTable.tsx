@@ -44,7 +44,6 @@ interface FirmTableProps {
 
 const FirmTable: React.FC<FirmTableProps> = ({ firms, isFilterPanelOpen = false }) => {
   useEffect(() => {
-    console.log('Firms actualizadas en FirmTable:', firms?.length || 0);
   }, [firms]);
 
   // Validar que firms sea un array

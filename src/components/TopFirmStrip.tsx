@@ -65,7 +65,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '10%',
         description: 'Use code: PROPFIRMGPS'
       },
-      websiteUrl: 'https://ftmo.com',
+      websiteUrl: ': https://trader.ftmo.com/?affiliates=IQkqSwGHUeRDctvFicAg',
       slug: 'ftmo-review',
       rating: 4.9,
       ratingCount: 3547,
@@ -288,7 +288,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '15%',
         description: 'Use code: GPSASC'
       },
-      websiteUrl: 'https://ascendexcapital.com',
+      websiteUrl: 'https://ascendex.com/es/register?inviteCode=UU05PXIHL',
       slug: 'ascendex-capital-review',
       rating: 4.6,
       ratingCount: 856,
@@ -769,7 +769,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '15%',
         description: 'Use code: GPSFT'
       },
-      websiteUrl: 'https://fortraders.com',
+      websiteUrl: 'https://dashboard.fortraders.com/purchasechallenge?sl=540',
       slug: 'fortraders-review',
       rating: 4.3,
       ratingCount: 567,
@@ -954,7 +954,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '15%',
         description: 'Use code: GPSLF'
       },
-      websiteUrl: 'https://larkfunding.com',
+      websiteUrl: 'https://dashboard.larkfunding.com/challenges?affiliateId=propfirmgps',
       slug: 'lark-funding-review',
       rating: 4.2,
       ratingCount: 345,
@@ -1065,7 +1065,7 @@ const TopFirmStrip: React.FC = () => {
         percentage: '15%',
         description: 'Use code: GPSMF'
       },
-      websiteUrl: 'https://mentfunding.com',
+      websiteUrl: 'https://dashboard.mentfunding.com//challenges?affiliateId=propfirmgps',
       slug: 'mentfunding-review',
       rating: 4.2,
       ratingCount: 345,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { Route, Routes, Navigate, useLocation, Link } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import FilterPanel from './components/FilterPanel';
@@ -29,7 +29,8 @@ import WhatsAppButton from './components/WhatsAppButton';
 import { logPageView, logError } from './types/analytics';
 import { useAnalytics } from './hooks/useAnalytics';
 import ErrorBoundary from './components/ErrorBoundary';
-
+import SEO from './components/SEO';
+import NotFound from './components/NotFound';
 
 const App: React.FC = () => {
   const [allFirms, setAllFirms] = useState<Firm[]>([]);
@@ -94,16 +95,13 @@ const App: React.FC = () => {
           // Verificar si coincide con los filtros seleccionados
           const matchesFilters = Object.entries(filters).every(([category, selectedValues]) => {
             if (!selectedValues || selectedValues.length === 0) return true;
-
-            const firmValue = firm[category] || '';
-            
             switch (category) {
               case 'accountSizes':
                 return selectedValues.includes(String(firm['ACCOUNT SIZE'] || ''));
               case 'steps':
                 return selectedValues.includes(String(firm['STEPS'] || ''));
               case 'platforms': {
-                const platforms = String(firm['PLATFORMS'] || '').split(',').map(p => p.trim());
+                const platforms = String(firm['Trading Platforms'] || '').split(',').map(p => p.trim());
                 return selectedValues.some((value: string) => platforms.includes(value));
               }
               case 'instruments': {
@@ -151,6 +149,10 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary>
+      <SEO 
+        title="Prop Firm GPS - Encuentra el broker que mejor se adapte a tu estilo de trading"
+        description="Encuentra el broker que mejor se adapte a su estilo de trading, objetivos de inversión y nivel de experiencia. ⚖️ Evaluaciones Objetivas. Revisiones imparciales."
+      />
       <div className="flex flex-col min-h-screen bg-[#131722] text-[#d1d4dc] font-inter">
         <Navbar />
         <main className="flex-grow">
@@ -171,7 +173,7 @@ const App: React.FC = () => {
             <Route path="/firm/:slug/details" element={<FirmDetailExtended />} />
             <Route path="/herramientas" element={<TradingTools setSelectedCurrency={setSelectedCurrency} />}>
               <Route index element={<Navigate to="/herramientas/calculadoras" replace />} />
-              <Route path="calculadoras" element={<PositionSizeCalculator />} />s
+              <Route path="calculadoras" element={<PositionSizeCalculator />} />
               <Route path="analisis" element={<TradingViewWidget currency1={selectedCurrency} currency2="USD" />} />
               <Route path="riesgo" element={<RiskManagement />} />
               <Route path="beneficios" element={<ProfitCalculator />} />
@@ -181,6 +183,7 @@ const App: React.FC = () => {
             <Route path="/faq" element={<FAQ />} />
             <Route path="/centro-recursos" element={<ResourceCenter />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <Footer />
@@ -200,7 +203,11 @@ const Home: React.FC<{
   tableRef: React.RefObject<HTMLDivElement>;
 }> = ({ firms, displayedFirms, onFilterChange, currentFilters, onSearch, tableRef }) => (
   <>
-    <HeroSection tableRef={tableRef} /> {/* Pasar la referencia al HeroSection */}
+    <SEO 
+      title="Prop Firm GPS - Encuentra el broker que mejor se adapte a tu estilo de trading"
+      description="Encuentra el broker que mejor se adapte a su estilo de trading, objetivos de inversión y nivel de experiencia. ⚖️ Evaluaciones Objetivas. Revisiones imparciales."
+    />
+    <HeroSection tableRef={tableRef} />
     <div className="w-full px-2 sm:px-4 py-8">
       <div className="mb-8">
         <SearchBar onSearch={onSearch} />
@@ -213,7 +220,7 @@ const Home: React.FC<{
             currentFilters={currentFilters}
           />
         </div>
-        <div className="lg:w-3/4 overflow-x-auto" ref={tableRef}> {/* Asignar la referencia a la tabla */}
+        <div className="lg:w-3/4 overflow-x-auto" ref={tableRef}>
           <FirmTable firms={displayedFirms} />
         </div>
       </div>

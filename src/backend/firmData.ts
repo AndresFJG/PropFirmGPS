@@ -14,7 +14,7 @@ export const firmLinks: TopFirm[] = [
   {
     "id": "2",
     "name": "FundedNext",
-    "websiteUrl": ""
+    "websiteUrl": "https://fundednext.com/es"
   },
   {
     "id": "3",
@@ -74,7 +74,7 @@ export const firmLinks: TopFirm[] = [
   {
     "id": "14",
     "name": "Ascendx Capital",
-    "websiteUrl": "https://ascendex.com/es"
+    "websiteUrl": "https://ascendex.com/es/register?inviteCode=UU05PXIHL"
   },
   {
     "id": "15",
@@ -119,7 +119,7 @@ export const firmLinks: TopFirm[] = [
   {
     "id": "23",
     "name": "FTMO",
-    "websiteUrl": "https://ftmo.com"
+    "websiteUrl": "https://trader.ftmo.com/?affiliates=IQkqSwGHUeRDctvFicAg"
   },
   {
     "id": "24",
@@ -154,7 +154,7 @@ export const firmLinks: TopFirm[] = [
   {
     "id": "30",
     "name": "For Traders",
-    "websiteUrl": "https://fortraders.com"
+    "websiteUrl": "https://dashboard.fortraders.com/purchasechallenge?sl=540"
   },
   {
     "id": "31",
@@ -164,7 +164,7 @@ export const firmLinks: TopFirm[] = [
   {
     "id": "32",
     "name": "Lark Funding",
-    "websiteUrl": "https://larkfunding.com"
+    "websiteUrl": "https://dashboard.larkfunding.com/challenges?affiliateId=propfirmgps"
   },
   {
     "id": "33",
@@ -194,7 +194,7 @@ export const firmLinks: TopFirm[] = [
   {
     "id": "38",
     "name": "Ment Funding",
-    "websiteUrl": "https://mentfunding.com"
+    "websiteUrl": "https://dashboard.mentfunding.com//challenges?affiliateId=propfirmgps"
   },
   {
     "id": "39",

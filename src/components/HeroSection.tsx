@@ -18,15 +18,7 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
   useEffect(() => {
-    const container = document.getElementById('tradingview-widget');
-    if (!container) return;
-
-    container.innerHTML = `
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-      </div>
-    `;
-
+    // Crear y configurar el script primero
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.async = true;
@@ -62,10 +54,39 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
       locale: "es"
     };
 
-    script.innerHTML = JSON.stringify(config);
-    container.appendChild(script);
+    // Esperar a que el DOM esté listo
+    const initWidget = () => {
+      const container = document.getElementById('tradingview-widget');
+      if (!container) return;
+
+      // Limpiar el contenedor
+      container.innerHTML = '';
+
+      // Crear la estructura necesaria
+      const widgetContainer = document.createElement('div');
+      widgetContainer.className = 'tradingview-widget-container';
+      
+      const widget = document.createElement('div');
+      widget.className = 'tradingview-widget-container__widget';
+      
+      widgetContainer.appendChild(widget);
+      container.appendChild(widgetContainer);
+
+      // Configurar el script
+      script.innerHTML = JSON.stringify(config);
+      container.appendChild(script);
+    };
+
+    // Asegurarnos de que el DOM esté completamente cargado
+    if (document.readyState === 'complete') {
+      initWidget();
+    } else {
+      window.addEventListener('load', initWidget);
+    }
 
     return () => {
+      window.removeEventListener('load', initWidget);
+      const container = document.getElementById('tradingview-widget');
       if (container) {
         container.innerHTML = '';
       }
@@ -130,7 +151,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
           className="tradingview-widget-container"
           style={{
             width: '100%',
-            height: '40px'
+            height: '40px',
+            overflow: 'hidden'
           }}
         >
           <div className="tradingview-widget-container__widget"></div>

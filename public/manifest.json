@@ -1,11 +1,11 @@
 {
-  "short_name": "PropFirm GPS",
-  "name": "PropFirm GPS - Comparador de Prop Firms",
+  "short_name": "Prop Firm GPS",
+  "name": "Prop Firm GPS - Comparador de Prop Firms",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "logopropfirm.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
     }
   ],
   "start_url": ".",

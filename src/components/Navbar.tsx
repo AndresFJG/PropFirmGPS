@@ -34,7 +34,7 @@ const Navbar: React.FC = () => {
                 className="flex items-center space-x-2"
               >
                 <span className="text-xl font-bold bg-gradient-to-r from-[#d1d4dc] via-[#5B8CFF] to-[#2962ff] text-transparent bg-clip-text hover:from-[#ffffff] hover:to-[#5B8CFF] transition-all duration-300">
-                  PropFirm GPS
+                  PROP FIRM GPS
                 </span>
               </Link>
             </div>
