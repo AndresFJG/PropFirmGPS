@@ -31,6 +31,7 @@ import { useAnalytics } from './hooks/useAnalytics';
 import ErrorBoundary from './components/ErrorBoundary';
 import SEO from './components/SEO';
 import NotFound from './components/NotFound';
+import FirmComparison from './components/tools/FirmComparison';
 
 const App: React.FC = () => {
   const [allFirms, setAllFirms] = useState<Firm[]>([]);
@@ -177,6 +178,7 @@ const App: React.FC = () => {
               <Route path="analisis" element={<TradingViewWidget currency1={selectedCurrency} currency2="USD" />} />
               <Route path="riesgo" element={<RiskManagement />} />
               <Route path="beneficios" element={<ProfitCalculator />} />
+              <Route path="comparacion" element={<FirmComparison />} />
             </Route>
             <Route path="/terms-and-privacy" element={<TermsAndPrivacy />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

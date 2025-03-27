@@ -73,8 +73,6 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onFilterChange, firms, curren
       .filter(Boolean)
     )),
     maxDrawdown: ['5', '10', '12'],
-    // Eliminar el filtro de días de trading
-    // tradingDays: ['5', '30', '60']
   };
 
   const handleFilterClick = (e: React.MouseEvent, category: keyof Filters, value: string) => {

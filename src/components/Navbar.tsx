@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaBars, FaTimes, FaChevronDown, FaTools, FaCalculator, FaChartLine, FaBalanceScale, FaPercent } from 'react-icons/fa';
+import { FaBars, FaTimes, FaChevronDown, FaTools, FaCalculator, FaChartLine, FaBalanceScale, FaPercent, FaExchangeAlt } from 'react-icons/fa';
 import { logEvent } from '../types/analytics';
 
 const Navbar: React.FC = () => {
@@ -13,6 +13,7 @@ const Navbar: React.FC = () => {
     { name: 'Análisis Técnico', path: '/herramientas/analisis', icon: FaChartLine },
     { name: 'Gestión de Riesgo', path: '/herramientas/riesgo', icon: FaBalanceScale },
     { name: 'Calculadora de Beneficios', path: '/herramientas/beneficios', icon: FaPercent },
+    { name: 'Comparación', path: '/herramientas/comparacion', icon: FaExchangeAlt },
   ];
 
   const handleNavClick = (section: string) => {

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
-import { FaCalculator, FaChartLine, FaBalanceScale, FaPercent } from 'react-icons/fa';
+import { FaCalculator, FaChartLine, FaBalanceScale, FaPercent, FaExchangeAlt } from 'react-icons/fa';
 import { logEvent } from '../types/analytics';
+import SEO from './SEO';
 
 interface TradingToolsProps {
   setSelectedCurrency: React.Dispatch<React.SetStateAction<string>>;
@@ -40,6 +41,13 @@ const TradingTools: React.FC<TradingToolsProps> = ({ setSelectedCurrency }) => {
       icon: FaPercent, 
       label: 'Calculadora de Beneficios',
       description: 'Calcula tus beneficios potenciales'
+    },
+    { 
+      id: 'comparacion', 
+      path: '/herramientas/comparacion',
+      icon: FaExchangeAlt, 
+      label: 'Comparación',
+      description: 'Compara diferentes prop firms lado a lado'
     }
   ];
 
@@ -83,10 +91,14 @@ const TradingTools: React.FC<TradingToolsProps> = ({ setSelectedCurrency }) => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEO 
+        title="Herramientas de Trading | Prop Firm GPS"
+        description="Utiliza nuestras herramientas de trading para calcular tamaños de posición, analizar mercados, gestionar riesgos y comparar prop firms."
+      />
       <h2 className="text-3xl font-bold text-[#d1d4dc] mb-8 font-poppins text-center">
         Herramientas de Trading
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
         {tools.map((tool) => (
           <Link
             key={tool.id}
